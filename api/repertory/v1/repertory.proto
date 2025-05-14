@@ -23,7 +23,7 @@ message AddRepertoryReply {
 message PurchaseRequest {
   uint32 user_id = 1;
   uint32 repertory_id = 2;
-  uint32 count = 3;
+  uint32 quantity = 3;
 }
 
 message PurchaseReply {

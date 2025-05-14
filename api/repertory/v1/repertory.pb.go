@@ -182,7 +182,7 @@ type PurchaseRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	UserId        uint32                 `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
 	RepertoryId   uint32                 `protobuf:"varint,2,opt,name=repertory_id,json=repertoryId,proto3" json:"repertory_id,omitempty"`
-	Count         uint32                 `protobuf:"varint,3,opt,name=count,proto3" json:"count,omitempty"`
+	Quantity      uint32                 `protobuf:"varint,3,opt,name=quantity,proto3" json:"quantity,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -231,9 +231,9 @@ func (x *PurchaseRequest) GetRepertoryId() uint32 {
 	return 0
 }
 
-func (x *PurchaseRequest) GetCount() uint32 {
+func (x *PurchaseRequest) GetQuantity() uint32 {
 	if x != nil {
-		return x.Count
+		return x.Quantity
 	}
 	return 0
 }
@@ -383,11 +383,11 @@ const file_api_repertory_v1_repertory_proto_rawDesc = "" +
 	"\x02id\x18\x01 \x01(\rR\x02id\x12\x14\n" +
 	"\x05count\x18\x02 \x01(\x05R\x05count\"-\n" +
 	"\x11AddRepertoryReply\x12\x18\n" +
-	"\asuccess\x18\x01 \x01(\bR\asuccess\"c\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\"i\n" +
 	"\x0fPurchaseRequest\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\rR\x06userId\x12!\n" +
-	"\frepertory_id\x18\x02 \x01(\rR\vrepertoryId\x12\x14\n" +
-	"\x05count\x18\x03 \x01(\rR\x05count\")\n" +
+	"\frepertory_id\x18\x02 \x01(\rR\vrepertoryId\x12\x1a\n" +
+	"\bquantity\x18\x03 \x01(\rR\bquantity\")\n" +
 	"\rPurchaseReply\x12\x18\n" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\"&\n" +
 	"\x14FindRepertoryRequest\x12\x0e\n" +
