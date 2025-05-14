@@ -11,32 +11,32 @@ message Order {
   uint32 good_quantity = 4;
 }
 
-message AddOrderRequest {
+message CreateOrderRequest {
   uint32 user_id = 1;
   uint32 good_id = 2;
   uint32 good_quantity = 3;
 }
 
-message AddOrderReply {
+message CreateOrderReply {
   bool success = 1;
 }
 
-message FindOrderRequest {
+message GetOrderRequest {
   uint32 id = 1;
 }
-message FindOrderReply {
+message GetOrderReply {
   bool success = 1;
   Order order = 2;
 }
 
 service OrderService {
-  rpc AddOrder(AddOrderRequest) returns (AddOrderReply){
+  rpc CreateOrder(CreateOrderRequest) returns (CreateOrderReply){
     option (google.api.http) = {
       post: "/order/add"
       body: "*"
     };
   }
-  rpc FindOrder(FindOrderRequest) returns (FindOrderReply){
+  rpc GetOrder(GetOrderRequest) returns (GetOrderReply){
     option (google.api.http) = {
       get: "/order/{id}"
     };
