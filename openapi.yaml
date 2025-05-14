@@ -68,7 +68,7 @@ components:
                 id:
                     type: integer
                     format: uint32
-                count:
+                quantity:
                     type: integer
                     format: int32
         FindRepertoryReply:

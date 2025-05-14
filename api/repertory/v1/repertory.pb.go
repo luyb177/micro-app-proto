@@ -85,7 +85,7 @@ func (x *Repertory) GetQuantity() uint32 {
 type AddRepertoryRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Id            uint32                 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
-	Count         int32                  `protobuf:"varint,2,opt,name=count,proto3" json:"count,omitempty"`
+	Quantity      int32                  `protobuf:"varint,2,opt,name=quantity,proto3" json:"quantity,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -127,9 +127,9 @@ func (x *AddRepertoryRequest) GetId() uint32 {
 	return 0
 }
 
-func (x *AddRepertoryRequest) GetCount() int32 {
+func (x *AddRepertoryRequest) GetQuantity() int32 {
 	if x != nil {
-		return x.Count
+		return x.Quantity
 	}
 	return 0
 }
@@ -378,10 +378,10 @@ const file_api_repertory_v1_repertory_proto_rawDesc = "" +
 	"\tRepertory\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\rR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12\x1a\n" +
-	"\bquantity\x18\x03 \x01(\rR\bquantity\";\n" +
+	"\bquantity\x18\x03 \x01(\rR\bquantity\"A\n" +
 	"\x13AddRepertoryRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\rR\x02id\x12\x14\n" +
-	"\x05count\x18\x02 \x01(\x05R\x05count\"-\n" +
+	"\x02id\x18\x01 \x01(\rR\x02id\x12\x1a\n" +
+	"\bquantity\x18\x02 \x01(\x05R\bquantity\"-\n" +
 	"\x11AddRepertoryReply\x12\x18\n" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\"i\n" +
 	"\x0fPurchaseRequest\x12\x17\n" +
