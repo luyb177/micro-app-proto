@@ -1,0 +1,63 @@
+syntax = "proto3";
+
+package user.v1;
+import "google/api/annotations.proto";  // 为了支持http
+option go_package = "api/user/v1;v1";
+
+message User {
+  uint32 id = 1;
+  string name = 2;
+  uint32 money = 3;
+}
+
+message RegisterRequest{
+  string name = 1;
+}
+
+message RegisterReply{
+  uint32 code = 1;
+  User user = 2;
+}
+
+message PurchaseRequest{
+  uint32 user_id = 1;
+  uint32 good_id = 2;
+  uint32 quantity = 3; // 购买数量
+}
+
+message PurchaseReply{
+  bool success = 2;
+}
+
+message FindUserRequest{
+  uint32 id = 1;
+}
+
+message FindUserReply{
+  bool success = 1;
+  User user = 2;
+}
+
+service Users {
+  rpc Register (RegisterRequest) returns (RegisterReply) {
+    option (google.api.http) = { // 支持生成http服务
+      post: "/register"
+      body: "*"
+    };
+  }
+  rpc Purchase(PurchaseRequest) returns (PurchaseReply){
+    option (google.api.http) = {
+      post: "/purchase"
+      body: "*"
+    };
+  }
+  rpc FindUser(FindUserRequest) returns (FindUserReply){
+    option (google.api.http) = {
+      get: "/user/{id}"
+    };
+  }
+}
+
+
+
+
