@@ -19,12 +19,12 @@ var _ = binding.EncodeURL
 
 const _ = http.SupportPackageIsVersion1
 
-const OperationUsersFindUser = "/user.v1.Users/FindUser"
+const OperationUsersGetUser = "/user.v1.Users/GetUser"
 const OperationUsersPurchase = "/user.v1.Users/Purchase"
 const OperationUsersRegister = "/user.v1.Users/Register"
 
 type UsersHTTPServer interface {
-	FindUser(context.Context, *FindUserRequest) (*FindUserReply, error)
+	GetUser(context.Context, *GetUserRequest) (*GetUserReply, error)
 	Purchase(context.Context, *PurchaseRequest) (*PurchaseReply, error)
 	Register(context.Context, *RegisterRequest) (*RegisterReply, error)
 }
@@ -33,7 +33,7 @@ func RegisterUsersHTTPServer(s *http.Server, srv UsersHTTPServer) {
 	r := s.Route("/")
 	r.POST("/register", _Users_Register0_HTTP_Handler(srv))
 	r.POST("/purchase", _Users_Purchase0_HTTP_Handler(srv))
-	r.GET("/user/{id}", _Users_FindUser0_HTTP_Handler(srv))
+	r.GET("/user/{id}", _Users_GetUser0_HTTP_Handler(srv))
 }
 
 func _Users_Register0_HTTP_Handler(srv UsersHTTPServer) func(ctx http.Context) error {
@@ -80,30 +80,30 @@ func _Users_Purchase0_HTTP_Handler(srv UsersHTTPServer) func(ctx http.Context) e
 	}
 }
 
-func _Users_FindUser0_HTTP_Handler(srv UsersHTTPServer) func(ctx http.Context) error {
+func _Users_GetUser0_HTTP_Handler(srv UsersHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
-		var in FindUserRequest
+		var in GetUserRequest
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
 		if err := ctx.BindVars(&in); err != nil {
 			return err
 		}
-		http.SetOperation(ctx, OperationUsersFindUser)
+		http.SetOperation(ctx, OperationUsersGetUser)
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.FindUser(ctx, req.(*FindUserRequest))
+			return srv.GetUser(ctx, req.(*GetUserRequest))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
 			return err
 		}
-		reply := out.(*FindUserReply)
+		reply := out.(*GetUserReply)
 		return ctx.Result(200, reply)
 	}
 }
 
 type UsersHTTPClient interface {
-	FindUser(ctx context.Context, req *FindUserRequest, opts ...http.CallOption) (rsp *FindUserReply, err error)
+	GetUser(ctx context.Context, req *GetUserRequest, opts ...http.CallOption) (rsp *GetUserReply, err error)
 	Purchase(ctx context.Context, req *PurchaseRequest, opts ...http.CallOption) (rsp *PurchaseReply, err error)
 	Register(ctx context.Context, req *RegisterRequest, opts ...http.CallOption) (rsp *RegisterReply, err error)
 }
@@ -116,11 +116,11 @@ func NewUsersHTTPClient(client *http.Client) UsersHTTPClient {
 	return &UsersHTTPClientImpl{client}
 }
 
-func (c *UsersHTTPClientImpl) FindUser(ctx context.Context, in *FindUserRequest, opts ...http.CallOption) (*FindUserReply, error) {
-	var out FindUserReply
+func (c *UsersHTTPClientImpl) GetUser(ctx context.Context, in *GetUserRequest, opts ...http.CallOption) (*GetUserReply, error) {
+	var out GetUserReply
 	pattern := "/user/{id}"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation(OperationUsersFindUser))
+	opts = append(opts, http.Operation(OperationUsersGetUser))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {

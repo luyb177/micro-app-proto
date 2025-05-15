@@ -19,67 +19,95 @@ var _ = binding.EncodeURL
 
 const _ = http.SupportPackageIsVersion1
 
-const OperationRepertoryServiceAddGoods = "/repertory.v1.RepertoryService/AddGoods"
-const OperationRepertoryServiceFindRepertory = "/repertory.v1.RepertoryService/FindRepertory"
+const OperationRepertoryServiceDecrRepertory = "/repertory.v1.RepertoryService/DecrRepertory"
+const OperationRepertoryServiceGetRepertory = "/repertory.v1.RepertoryService/GetRepertory"
+const OperationRepertoryServiceIncrRepertory = "/repertory.v1.RepertoryService/IncrRepertory"
 
 type RepertoryServiceHTTPServer interface {
-	AddGoods(context.Context, *AddRepertoryRequest) (*AddRepertoryReply, error)
-	FindRepertory(context.Context, *FindRepertoryRequest) (*FindRepertoryReply, error)
+	// DecrRepertory 减库存
+	DecrRepertory(context.Context, *DecrRepertoryRequest) (*DecrRepertoryReply, error)
+	GetRepertory(context.Context, *GetRepertoryRequest) (*GetRepertoryReply, error)
+	// IncrRepertory 加库存
+	IncrRepertory(context.Context, *IncrRepertoryRequest) (*IncrRepertoryReply, error)
 }
 
 func RegisterRepertoryServiceHTTPServer(s *http.Server, srv RepertoryServiceHTTPServer) {
 	r := s.Route("/")
-	r.POST("/repertory/add", _RepertoryService_AddGoods0_HTTP_Handler(srv))
-	r.GET("/repertory/{id}", _RepertoryService_FindRepertory0_HTTP_Handler(srv))
+	r.POST("/repertory/decr", _RepertoryService_DecrRepertory0_HTTP_Handler(srv))
+	r.POST("/repertory/incr", _RepertoryService_IncrRepertory0_HTTP_Handler(srv))
+	r.GET("/repertory/{good_id}", _RepertoryService_GetRepertory0_HTTP_Handler(srv))
 }
 
-func _RepertoryService_AddGoods0_HTTP_Handler(srv RepertoryServiceHTTPServer) func(ctx http.Context) error {
+func _RepertoryService_DecrRepertory0_HTTP_Handler(srv RepertoryServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
-		var in AddRepertoryRequest
+		var in DecrRepertoryRequest
 		if err := ctx.Bind(&in); err != nil {
 			return err
 		}
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
-		http.SetOperation(ctx, OperationRepertoryServiceAddGoods)
+		http.SetOperation(ctx, OperationRepertoryServiceDecrRepertory)
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.AddGoods(ctx, req.(*AddRepertoryRequest))
+			return srv.DecrRepertory(ctx, req.(*DecrRepertoryRequest))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
 			return err
 		}
-		reply := out.(*AddRepertoryReply)
+		reply := out.(*DecrRepertoryReply)
 		return ctx.Result(200, reply)
 	}
 }
 
-func _RepertoryService_FindRepertory0_HTTP_Handler(srv RepertoryServiceHTTPServer) func(ctx http.Context) error {
+func _RepertoryService_IncrRepertory0_HTTP_Handler(srv RepertoryServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
-		var in FindRepertoryRequest
+		var in IncrRepertoryRequest
+		if err := ctx.Bind(&in); err != nil {
+			return err
+		}
+		if err := ctx.BindQuery(&in); err != nil {
+			return err
+		}
+		http.SetOperation(ctx, OperationRepertoryServiceIncrRepertory)
+		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
+			return srv.IncrRepertory(ctx, req.(*IncrRepertoryRequest))
+		})
+		out, err := h(ctx, &in)
+		if err != nil {
+			return err
+		}
+		reply := out.(*IncrRepertoryReply)
+		return ctx.Result(200, reply)
+	}
+}
+
+func _RepertoryService_GetRepertory0_HTTP_Handler(srv RepertoryServiceHTTPServer) func(ctx http.Context) error {
+	return func(ctx http.Context) error {
+		var in GetRepertoryRequest
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
 		if err := ctx.BindVars(&in); err != nil {
 			return err
 		}
-		http.SetOperation(ctx, OperationRepertoryServiceFindRepertory)
+		http.SetOperation(ctx, OperationRepertoryServiceGetRepertory)
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.FindRepertory(ctx, req.(*FindRepertoryRequest))
+			return srv.GetRepertory(ctx, req.(*GetRepertoryRequest))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
 			return err
 		}
-		reply := out.(*FindRepertoryReply)
+		reply := out.(*GetRepertoryReply)
 		return ctx.Result(200, reply)
 	}
 }
 
 type RepertoryServiceHTTPClient interface {
-	AddGoods(ctx context.Context, req *AddRepertoryRequest, opts ...http.CallOption) (rsp *AddRepertoryReply, err error)
-	FindRepertory(ctx context.Context, req *FindRepertoryRequest, opts ...http.CallOption) (rsp *FindRepertoryReply, err error)
+	DecrRepertory(ctx context.Context, req *DecrRepertoryRequest, opts ...http.CallOption) (rsp *DecrRepertoryReply, err error)
+	GetRepertory(ctx context.Context, req *GetRepertoryRequest, opts ...http.CallOption) (rsp *GetRepertoryReply, err error)
+	IncrRepertory(ctx context.Context, req *IncrRepertoryRequest, opts ...http.CallOption) (rsp *IncrRepertoryReply, err error)
 }
 
 type RepertoryServiceHTTPClientImpl struct {
@@ -90,11 +118,11 @@ func NewRepertoryServiceHTTPClient(client *http.Client) RepertoryServiceHTTPClie
 	return &RepertoryServiceHTTPClientImpl{client}
 }
 
-func (c *RepertoryServiceHTTPClientImpl) AddGoods(ctx context.Context, in *AddRepertoryRequest, opts ...http.CallOption) (*AddRepertoryReply, error) {
-	var out AddRepertoryReply
-	pattern := "/repertory/add"
+func (c *RepertoryServiceHTTPClientImpl) DecrRepertory(ctx context.Context, in *DecrRepertoryRequest, opts ...http.CallOption) (*DecrRepertoryReply, error) {
+	var out DecrRepertoryReply
+	pattern := "/repertory/decr"
 	path := binding.EncodeURL(pattern, in, false)
-	opts = append(opts, http.Operation(OperationRepertoryServiceAddGoods))
+	opts = append(opts, http.Operation(OperationRepertoryServiceDecrRepertory))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "POST", path, in, &out, opts...)
 	if err != nil {
@@ -103,13 +131,26 @@ func (c *RepertoryServiceHTTPClientImpl) AddGoods(ctx context.Context, in *AddRe
 	return &out, nil
 }
 
-func (c *RepertoryServiceHTTPClientImpl) FindRepertory(ctx context.Context, in *FindRepertoryRequest, opts ...http.CallOption) (*FindRepertoryReply, error) {
-	var out FindRepertoryReply
-	pattern := "/repertory/{id}"
+func (c *RepertoryServiceHTTPClientImpl) GetRepertory(ctx context.Context, in *GetRepertoryRequest, opts ...http.CallOption) (*GetRepertoryReply, error) {
+	var out GetRepertoryReply
+	pattern := "/repertory/{good_id}"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation(OperationRepertoryServiceFindRepertory))
+	opts = append(opts, http.Operation(OperationRepertoryServiceGetRepertory))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return &out, nil
+}
+
+func (c *RepertoryServiceHTTPClientImpl) IncrRepertory(ctx context.Context, in *IncrRepertoryRequest, opts ...http.CallOption) (*IncrRepertoryReply, error) {
+	var out IncrRepertoryReply
+	pattern := "/repertory/incr"
+	path := binding.EncodeURL(pattern, in, false)
+	opts = append(opts, http.Operation(OperationRepertoryServiceIncrRepertory))
+	opts = append(opts, http.PathTemplate(pattern))
+	err := c.cc.Invoke(ctx, "POST", path, in, &out, opts...)
 	if err != nil {
 		return nil, err
 	}

@@ -5,50 +5,58 @@ import "google/api/annotations.proto";  // 为了支持http
 option go_package = "api/repertory/v1;v1";
 
 message Repertory {
-  uint32 id = 1;
-  string name = 2;
-  uint32 quantity = 3; // 库存数量
+  uint32 good_id = 1;
+  string good_name = 2;
+  uint32 good_quantity = 3; // 库存数量
 }
 
 
-message AddRepertoryRequest {
-  uint32 id = 1;
-  int32 quantity = 2;
+
+message DecrRepertoryRequest {
+    int64 good_id = 1;
+    uint32 good_quantity = 2;
 }
 
-message AddRepertoryReply {
+message DecrRepertoryReply {
   bool success = 1;
 }
 
-message PurchaseRequest {
-  uint32 user_id = 1;
-  uint32 repertory_id = 2;
-  uint32 quantity = 3;
+message IncrRepertoryRequest {
+  uint32 good_id = 1;
+  int32 good_quantity = 2;
 }
 
-message PurchaseReply {
+message IncrRepertoryReply {
   bool success = 1;
 }
 
-message FindRepertoryRequest {
-  uint32 id = 1;
+
+message GetRepertoryRequest {
+  uint32 good_id = 1;
 }
 
-message FindRepertoryReply {
+message GetRepertoryReply {
   Repertory repertory = 1;
 }
 
 service RepertoryService {
-  rpc Purchase(PurchaseRequest) returns (PurchaseReply);
-  rpc AddGoods (AddRepertoryRequest) returns (AddRepertoryReply){
+  // 减库存
+  rpc DecrRepertory(DecrRepertoryRequest) returns (DecrRepertoryReply){
     option (google.api.http) = {
-      post: "/repertory/add"
+      post: "/repertory/decr"
       body: "*"
     };
   }
-  rpc FindRepertory (FindRepertoryRequest) returns (FindRepertoryReply){
+  // 加库存
+  rpc IncrRepertory(IncrRepertoryRequest) returns (IncrRepertoryReply){
     option (google.api.http) = {
-      get: "/repertory/{id}"
+      post: "/repertory/incr"
+      body: "*"
+    };
+  }
+  rpc GetRepertory(GetRepertoryRequest) returns (GetRepertoryReply){
+    option (google.api.http) = {
+      get: "/repertory/{good_id}"
     };
   }
 }

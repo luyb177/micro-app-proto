@@ -19,10 +19,12 @@ var _ = binding.EncodeURL
 
 const _ = http.SupportPackageIsVersion1
 
+const OperationOrderServiceCancelOrder = "/order.v1.OrderService/CancelOrder"
 const OperationOrderServiceCreateOrder = "/order.v1.OrderService/CreateOrder"
 const OperationOrderServiceGetOrder = "/order.v1.OrderService/GetOrder"
 
 type OrderServiceHTTPServer interface {
+	CancelOrder(context.Context, *CancelOrderRequest) (*CancelOrderReply, error)
 	CreateOrder(context.Context, *CreateOrderRequest) (*CreateOrderReply, error)
 	GetOrder(context.Context, *GetOrderRequest) (*GetOrderReply, error)
 }
@@ -30,6 +32,7 @@ type OrderServiceHTTPServer interface {
 func RegisterOrderServiceHTTPServer(s *http.Server, srv OrderServiceHTTPServer) {
 	r := s.Route("/")
 	r.POST("/order/add", _OrderService_CreateOrder0_HTTP_Handler(srv))
+	r.POST("/order/cancel", _OrderService_CancelOrder0_HTTP_Handler(srv))
 	r.GET("/order/{id}", _OrderService_GetOrder0_HTTP_Handler(srv))
 }
 
@@ -51,6 +54,28 @@ func _OrderService_CreateOrder0_HTTP_Handler(srv OrderServiceHTTPServer) func(ct
 			return err
 		}
 		reply := out.(*CreateOrderReply)
+		return ctx.Result(200, reply)
+	}
+}
+
+func _OrderService_CancelOrder0_HTTP_Handler(srv OrderServiceHTTPServer) func(ctx http.Context) error {
+	return func(ctx http.Context) error {
+		var in CancelOrderRequest
+		if err := ctx.Bind(&in); err != nil {
+			return err
+		}
+		if err := ctx.BindQuery(&in); err != nil {
+			return err
+		}
+		http.SetOperation(ctx, OperationOrderServiceCancelOrder)
+		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
+			return srv.CancelOrder(ctx, req.(*CancelOrderRequest))
+		})
+		out, err := h(ctx, &in)
+		if err != nil {
+			return err
+		}
+		reply := out.(*CancelOrderReply)
 		return ctx.Result(200, reply)
 	}
 }
@@ -78,6 +103,7 @@ func _OrderService_GetOrder0_HTTP_Handler(srv OrderServiceHTTPServer) func(ctx h
 }
 
 type OrderServiceHTTPClient interface {
+	CancelOrder(ctx context.Context, req *CancelOrderRequest, opts ...http.CallOption) (rsp *CancelOrderReply, err error)
 	CreateOrder(ctx context.Context, req *CreateOrderRequest, opts ...http.CallOption) (rsp *CreateOrderReply, err error)
 	GetOrder(ctx context.Context, req *GetOrderRequest, opts ...http.CallOption) (rsp *GetOrderReply, err error)
 }
@@ -88,6 +114,19 @@ type OrderServiceHTTPClientImpl struct {
 
 func NewOrderServiceHTTPClient(client *http.Client) OrderServiceHTTPClient {
 	return &OrderServiceHTTPClientImpl{client}
+}
+
+func (c *OrderServiceHTTPClientImpl) CancelOrder(ctx context.Context, in *CancelOrderRequest, opts ...http.CallOption) (*CancelOrderReply, error) {
+	var out CancelOrderReply
+	pattern := "/order/cancel"
+	path := binding.EncodeURL(pattern, in, false)
+	opts = append(opts, http.Operation(OperationOrderServiceCancelOrder))
+	opts = append(opts, http.PathTemplate(pattern))
+	err := c.cc.Invoke(ctx, "POST", path, in, &out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return &out, nil
 }
 
 func (c *OrderServiceHTTPClientImpl) CreateOrder(ctx context.Context, in *CreateOrderRequest, opts ...http.CallOption) (*CreateOrderReply, error) {

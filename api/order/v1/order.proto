@@ -21,6 +21,16 @@ message CreateOrderReply {
   bool success = 1;
 }
 
+message CancelOrderRequest {
+  uint32 user_id = 1;
+  uint32 good_id = 2;
+  uint32 good_quantity = 3;
+}
+
+message CancelOrderReply {
+  bool success = 1;
+}
+
 message GetOrderRequest {
   uint32 id = 1;
 }
@@ -33,6 +43,12 @@ service OrderService {
   rpc CreateOrder(CreateOrderRequest) returns (CreateOrderReply){
     option (google.api.http) = {
       post: "/order/add"
+      body: "*"
+    };
+  }
+  rpc CancelOrder(CancelOrderRequest) returns (CancelOrderReply){
+    option (google.api.http) = {
+      post: "/order/cancel"
       body: "*"
     };
   }

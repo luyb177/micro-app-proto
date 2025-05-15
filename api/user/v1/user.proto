@@ -15,25 +15,25 @@ message RegisterRequest{
 }
 
 message RegisterReply{
-  uint32 code = 1;
+  bool success = 1;
   User user = 2;
 }
 
 message PurchaseRequest{
   uint32 user_id = 1;
   uint32 good_id = 2;
-  uint32 quantity = 3; // 购买数量
+  uint32 good_quantity = 3; // 购买数量
 }
 
 message PurchaseReply{
   bool success = 2;
 }
 
-message FindUserRequest{
+message GetUserRequest{
   uint32 id = 1;
 }
 
-message FindUserReply{
+message GetUserReply{
   bool success = 1;
   User user = 2;
 }
@@ -51,7 +51,7 @@ service Users {
       body: "*"
     };
   }
-  rpc FindUser(FindUserRequest) returns (FindUserReply){
+  rpc GetUser(GetUserRequest) returns (GetUserReply){
     option (google.api.http) = {
       get: "/user/{id}"
     };

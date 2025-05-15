@@ -21,7 +21,7 @@ const _ = grpc.SupportPackageIsVersion9
 const (
 	Users_Register_FullMethodName = "/user.v1.Users/Register"
 	Users_Purchase_FullMethodName = "/user.v1.Users/Purchase"
-	Users_FindUser_FullMethodName = "/user.v1.Users/FindUser"
+	Users_GetUser_FullMethodName  = "/user.v1.Users/GetUser"
 )
 
 // UsersClient is the client API for Users service.
@@ -30,7 +30,7 @@ const (
 type UsersClient interface {
 	Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*RegisterReply, error)
 	Purchase(ctx context.Context, in *PurchaseRequest, opts ...grpc.CallOption) (*PurchaseReply, error)
-	FindUser(ctx context.Context, in *FindUserRequest, opts ...grpc.CallOption) (*FindUserReply, error)
+	GetUser(ctx context.Context, in *GetUserRequest, opts ...grpc.CallOption) (*GetUserReply, error)
 }
 
 type usersClient struct {
@@ -61,10 +61,10 @@ func (c *usersClient) Purchase(ctx context.Context, in *PurchaseRequest, opts ..
 	return out, nil
 }
 
-func (c *usersClient) FindUser(ctx context.Context, in *FindUserRequest, opts ...grpc.CallOption) (*FindUserReply, error) {
+func (c *usersClient) GetUser(ctx context.Context, in *GetUserRequest, opts ...grpc.CallOption) (*GetUserReply, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(FindUserReply)
-	err := c.cc.Invoke(ctx, Users_FindUser_FullMethodName, in, out, cOpts...)
+	out := new(GetUserReply)
+	err := c.cc.Invoke(ctx, Users_GetUser_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -77,7 +77,7 @@ func (c *usersClient) FindUser(ctx context.Context, in *FindUserRequest, opts ..
 type UsersServer interface {
 	Register(context.Context, *RegisterRequest) (*RegisterReply, error)
 	Purchase(context.Context, *PurchaseRequest) (*PurchaseReply, error)
-	FindUser(context.Context, *FindUserRequest) (*FindUserReply, error)
+	GetUser(context.Context, *GetUserRequest) (*GetUserReply, error)
 	mustEmbedUnimplementedUsersServer()
 }
 
@@ -94,8 +94,8 @@ func (UnimplementedUsersServer) Register(context.Context, *RegisterRequest) (*Re
 func (UnimplementedUsersServer) Purchase(context.Context, *PurchaseRequest) (*PurchaseReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Purchase not implemented")
 }
-func (UnimplementedUsersServer) FindUser(context.Context, *FindUserRequest) (*FindUserReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method FindUser not implemented")
+func (UnimplementedUsersServer) GetUser(context.Context, *GetUserRequest) (*GetUserReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUser not implemented")
 }
 func (UnimplementedUsersServer) mustEmbedUnimplementedUsersServer() {}
 func (UnimplementedUsersServer) testEmbeddedByValue()               {}
@@ -154,20 +154,20 @@ func _Users_Purchase_Handler(srv interface{}, ctx context.Context, dec func(inte
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Users_FindUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(FindUserRequest)
+func _Users_GetUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetUserRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UsersServer).FindUser(ctx, in)
+		return srv.(UsersServer).GetUser(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Users_FindUser_FullMethodName,
+		FullMethod: Users_GetUser_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UsersServer).FindUser(ctx, req.(*FindUserRequest))
+		return srv.(UsersServer).GetUser(ctx, req.(*GetUserRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -188,8 +188,8 @@ var Users_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Users_Purchase_Handler,
 		},
 		{
-			MethodName: "FindUser",
-			Handler:    _Users_FindUser_Handler,
+			MethodName: "GetUser",
+			Handler:    _Users_GetUser_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

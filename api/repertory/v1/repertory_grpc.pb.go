@@ -19,18 +19,20 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	RepertoryService_Purchase_FullMethodName      = "/repertory.v1.RepertoryService/Purchase"
-	RepertoryService_AddGoods_FullMethodName      = "/repertory.v1.RepertoryService/AddGoods"
-	RepertoryService_FindRepertory_FullMethodName = "/repertory.v1.RepertoryService/FindRepertory"
+	RepertoryService_DecrRepertory_FullMethodName = "/repertory.v1.RepertoryService/DecrRepertory"
+	RepertoryService_IncrRepertory_FullMethodName = "/repertory.v1.RepertoryService/IncrRepertory"
+	RepertoryService_GetRepertory_FullMethodName  = "/repertory.v1.RepertoryService/GetRepertory"
 )
 
 // RepertoryServiceClient is the client API for RepertoryService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type RepertoryServiceClient interface {
-	Purchase(ctx context.Context, in *PurchaseRequest, opts ...grpc.CallOption) (*PurchaseReply, error)
-	AddGoods(ctx context.Context, in *AddRepertoryRequest, opts ...grpc.CallOption) (*AddRepertoryReply, error)
-	FindRepertory(ctx context.Context, in *FindRepertoryRequest, opts ...grpc.CallOption) (*FindRepertoryReply, error)
+	// 减库存
+	DecrRepertory(ctx context.Context, in *DecrRepertoryRequest, opts ...grpc.CallOption) (*DecrRepertoryReply, error)
+	// 加库存
+	IncrRepertory(ctx context.Context, in *IncrRepertoryRequest, opts ...grpc.CallOption) (*IncrRepertoryReply, error)
+	GetRepertory(ctx context.Context, in *GetRepertoryRequest, opts ...grpc.CallOption) (*GetRepertoryReply, error)
 }
 
 type repertoryServiceClient struct {
@@ -41,30 +43,30 @@ func NewRepertoryServiceClient(cc grpc.ClientConnInterface) RepertoryServiceClie
 	return &repertoryServiceClient{cc}
 }
 
-func (c *repertoryServiceClient) Purchase(ctx context.Context, in *PurchaseRequest, opts ...grpc.CallOption) (*PurchaseReply, error) {
+func (c *repertoryServiceClient) DecrRepertory(ctx context.Context, in *DecrRepertoryRequest, opts ...grpc.CallOption) (*DecrRepertoryReply, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(PurchaseReply)
-	err := c.cc.Invoke(ctx, RepertoryService_Purchase_FullMethodName, in, out, cOpts...)
+	out := new(DecrRepertoryReply)
+	err := c.cc.Invoke(ctx, RepertoryService_DecrRepertory_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *repertoryServiceClient) AddGoods(ctx context.Context, in *AddRepertoryRequest, opts ...grpc.CallOption) (*AddRepertoryReply, error) {
+func (c *repertoryServiceClient) IncrRepertory(ctx context.Context, in *IncrRepertoryRequest, opts ...grpc.CallOption) (*IncrRepertoryReply, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(AddRepertoryReply)
-	err := c.cc.Invoke(ctx, RepertoryService_AddGoods_FullMethodName, in, out, cOpts...)
+	out := new(IncrRepertoryReply)
+	err := c.cc.Invoke(ctx, RepertoryService_IncrRepertory_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *repertoryServiceClient) FindRepertory(ctx context.Context, in *FindRepertoryRequest, opts ...grpc.CallOption) (*FindRepertoryReply, error) {
+func (c *repertoryServiceClient) GetRepertory(ctx context.Context, in *GetRepertoryRequest, opts ...grpc.CallOption) (*GetRepertoryReply, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(FindRepertoryReply)
-	err := c.cc.Invoke(ctx, RepertoryService_FindRepertory_FullMethodName, in, out, cOpts...)
+	out := new(GetRepertoryReply)
+	err := c.cc.Invoke(ctx, RepertoryService_GetRepertory_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -75,9 +77,11 @@ func (c *repertoryServiceClient) FindRepertory(ctx context.Context, in *FindRepe
 // All implementations must embed UnimplementedRepertoryServiceServer
 // for forward compatibility.
 type RepertoryServiceServer interface {
-	Purchase(context.Context, *PurchaseRequest) (*PurchaseReply, error)
-	AddGoods(context.Context, *AddRepertoryRequest) (*AddRepertoryReply, error)
-	FindRepertory(context.Context, *FindRepertoryRequest) (*FindRepertoryReply, error)
+	// 减库存
+	DecrRepertory(context.Context, *DecrRepertoryRequest) (*DecrRepertoryReply, error)
+	// 加库存
+	IncrRepertory(context.Context, *IncrRepertoryRequest) (*IncrRepertoryReply, error)
+	GetRepertory(context.Context, *GetRepertoryRequest) (*GetRepertoryReply, error)
 	mustEmbedUnimplementedRepertoryServiceServer()
 }
 
@@ -88,14 +92,14 @@ type RepertoryServiceServer interface {
 // pointer dereference when methods are called.
 type UnimplementedRepertoryServiceServer struct{}
 
-func (UnimplementedRepertoryServiceServer) Purchase(context.Context, *PurchaseRequest) (*PurchaseReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Purchase not implemented")
+func (UnimplementedRepertoryServiceServer) DecrRepertory(context.Context, *DecrRepertoryRequest) (*DecrRepertoryReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DecrRepertory not implemented")
 }
-func (UnimplementedRepertoryServiceServer) AddGoods(context.Context, *AddRepertoryRequest) (*AddRepertoryReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method AddGoods not implemented")
+func (UnimplementedRepertoryServiceServer) IncrRepertory(context.Context, *IncrRepertoryRequest) (*IncrRepertoryReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method IncrRepertory not implemented")
 }
-func (UnimplementedRepertoryServiceServer) FindRepertory(context.Context, *FindRepertoryRequest) (*FindRepertoryReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method FindRepertory not implemented")
+func (UnimplementedRepertoryServiceServer) GetRepertory(context.Context, *GetRepertoryRequest) (*GetRepertoryReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetRepertory not implemented")
 }
 func (UnimplementedRepertoryServiceServer) mustEmbedUnimplementedRepertoryServiceServer() {}
 func (UnimplementedRepertoryServiceServer) testEmbeddedByValue()                          {}
@@ -118,56 +122,56 @@ func RegisterRepertoryServiceServer(s grpc.ServiceRegistrar, srv RepertoryServic
 	s.RegisterService(&RepertoryService_ServiceDesc, srv)
 }
 
-func _RepertoryService_Purchase_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(PurchaseRequest)
+func _RepertoryService_DecrRepertory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DecrRepertoryRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RepertoryServiceServer).Purchase(ctx, in)
+		return srv.(RepertoryServiceServer).DecrRepertory(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: RepertoryService_Purchase_FullMethodName,
+		FullMethod: RepertoryService_DecrRepertory_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RepertoryServiceServer).Purchase(ctx, req.(*PurchaseRequest))
+		return srv.(RepertoryServiceServer).DecrRepertory(ctx, req.(*DecrRepertoryRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _RepertoryService_AddGoods_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AddRepertoryRequest)
+func _RepertoryService_IncrRepertory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(IncrRepertoryRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RepertoryServiceServer).AddGoods(ctx, in)
+		return srv.(RepertoryServiceServer).IncrRepertory(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: RepertoryService_AddGoods_FullMethodName,
+		FullMethod: RepertoryService_IncrRepertory_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RepertoryServiceServer).AddGoods(ctx, req.(*AddRepertoryRequest))
+		return srv.(RepertoryServiceServer).IncrRepertory(ctx, req.(*IncrRepertoryRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _RepertoryService_FindRepertory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(FindRepertoryRequest)
+func _RepertoryService_GetRepertory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetRepertoryRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RepertoryServiceServer).FindRepertory(ctx, in)
+		return srv.(RepertoryServiceServer).GetRepertory(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: RepertoryService_FindRepertory_FullMethodName,
+		FullMethod: RepertoryService_GetRepertory_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RepertoryServiceServer).FindRepertory(ctx, req.(*FindRepertoryRequest))
+		return srv.(RepertoryServiceServer).GetRepertory(ctx, req.(*GetRepertoryRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -180,16 +184,16 @@ var RepertoryService_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*RepertoryServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "Purchase",
-			Handler:    _RepertoryService_Purchase_Handler,
+			MethodName: "DecrRepertory",
+			Handler:    _RepertoryService_DecrRepertory_Handler,
 		},
 		{
-			MethodName: "AddGoods",
-			Handler:    _RepertoryService_AddGoods_Handler,
+			MethodName: "IncrRepertory",
+			Handler:    _RepertoryService_IncrRepertory_Handler,
 		},
 		{
-			MethodName: "FindRepertory",
-			Handler:    _RepertoryService_FindRepertory_Handler,
+			MethodName: "GetRepertory",
+			Handler:    _RepertoryService_GetRepertory_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
