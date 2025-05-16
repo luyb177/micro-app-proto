@@ -221,6 +221,7 @@ func (x *CreateOrderReply) GetOrderId() string {
 type CancelOrderRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	OrderId       string                 `protobuf:"bytes,1,opt,name=order_id,json=orderId,proto3" json:"order_id,omitempty"`
+	Gid           string                 `protobuf:"bytes,2,opt,name=gid,proto3" json:"gid,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -258,6 +259,13 @@ func (*CancelOrderRequest) Descriptor() ([]byte, []int) {
 func (x *CancelOrderRequest) GetOrderId() string {
 	if x != nil {
 		return x.OrderId
+	}
+	return ""
+}
+
+func (x *CancelOrderRequest) GetGid() string {
+	if x != nil {
+		return x.Gid
 	}
 	return ""
 }
@@ -420,9 +428,10 @@ const file_api_order_v1_order_proto_rawDesc = "" +
 	"\x03gid\x18\x04 \x01(\tR\x03gid\"G\n" +
 	"\x10CreateOrderReply\x12\x18\n" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x19\n" +
-	"\border_id\x18\x02 \x01(\tR\aorderId\"/\n" +
+	"\border_id\x18\x02 \x01(\tR\aorderId\"A\n" +
 	"\x12CancelOrderRequest\x12\x19\n" +
-	"\border_id\x18\x01 \x01(\tR\aorderId\",\n" +
+	"\border_id\x18\x01 \x01(\tR\aorderId\x12\x10\n" +
+	"\x03gid\x18\x02 \x01(\tR\x03gid\",\n" +
 	"\x10CancelOrderReply\x12\x18\n" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\",\n" +
 	"\x0fGetOrderRequest\x12\x19\n" +

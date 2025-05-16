@@ -86,6 +86,7 @@ type DecrRepertoryRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	GoodId        int64                  `protobuf:"varint,1,opt,name=good_id,json=goodId,proto3" json:"good_id,omitempty"`
 	GoodQuantity  uint32                 `protobuf:"varint,2,opt,name=good_quantity,json=goodQuantity,proto3" json:"good_quantity,omitempty"`
+	Gid           string                 `protobuf:"bytes,3,opt,name=gid,proto3" json:"gid,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -132,6 +133,13 @@ func (x *DecrRepertoryRequest) GetGoodQuantity() uint32 {
 		return x.GoodQuantity
 	}
 	return 0
+}
+
+func (x *DecrRepertoryRequest) GetGid() string {
+	if x != nil {
+		return x.Gid
+	}
+	return ""
 }
 
 type DecrRepertoryReply struct {
@@ -182,6 +190,7 @@ type IncrRepertoryRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	GoodId        uint32                 `protobuf:"varint,1,opt,name=good_id,json=goodId,proto3" json:"good_id,omitempty"`
 	GoodQuantity  int32                  `protobuf:"varint,2,opt,name=good_quantity,json=goodQuantity,proto3" json:"good_quantity,omitempty"`
+	Gid           string                 `protobuf:"bytes,3,opt,name=gid,proto3" json:"gid,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -228,6 +237,13 @@ func (x *IncrRepertoryRequest) GetGoodQuantity() int32 {
 		return x.GoodQuantity
 	}
 	return 0
+}
+
+func (x *IncrRepertoryRequest) GetGid() string {
+	if x != nil {
+		return x.Gid
+	}
+	return ""
 }
 
 type IncrRepertoryReply struct {
@@ -320,7 +336,8 @@ func (x *GetRepertoryRequest) GetGoodId() uint32 {
 
 type GetRepertoryReply struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Repertory     *Repertory             `protobuf:"bytes,1,opt,name=repertory,proto3" json:"repertory,omitempty"`
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
+	Repertory     *Repertory             `protobuf:"bytes,2,opt,name=repertory,proto3" json:"repertory,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -355,6 +372,13 @@ func (*GetRepertoryReply) Descriptor() ([]byte, []int) {
 	return file_api_repertory_v1_repertory_proto_rawDescGZIP(), []int{6}
 }
 
+func (x *GetRepertoryReply) GetSuccess() bool {
+	if x != nil {
+		return x.Success
+	}
+	return false
+}
+
 func (x *GetRepertoryReply) GetRepertory() *Repertory {
 	if x != nil {
 		return x.Repertory
@@ -370,21 +394,24 @@ const file_api_repertory_v1_repertory_proto_rawDesc = "" +
 	"\tRepertory\x12\x17\n" +
 	"\agood_id\x18\x01 \x01(\rR\x06goodId\x12\x1b\n" +
 	"\tgood_name\x18\x02 \x01(\tR\bgoodName\x12#\n" +
-	"\rgood_quantity\x18\x03 \x01(\rR\fgoodQuantity\"T\n" +
+	"\rgood_quantity\x18\x03 \x01(\rR\fgoodQuantity\"f\n" +
 	"\x14DecrRepertoryRequest\x12\x17\n" +
 	"\agood_id\x18\x01 \x01(\x03R\x06goodId\x12#\n" +
-	"\rgood_quantity\x18\x02 \x01(\rR\fgoodQuantity\".\n" +
+	"\rgood_quantity\x18\x02 \x01(\rR\fgoodQuantity\x12\x10\n" +
+	"\x03gid\x18\x03 \x01(\tR\x03gid\".\n" +
 	"\x12DecrRepertoryReply\x12\x18\n" +
-	"\asuccess\x18\x01 \x01(\bR\asuccess\"T\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\"f\n" +
 	"\x14IncrRepertoryRequest\x12\x17\n" +
 	"\agood_id\x18\x01 \x01(\rR\x06goodId\x12#\n" +
-	"\rgood_quantity\x18\x02 \x01(\x05R\fgoodQuantity\".\n" +
+	"\rgood_quantity\x18\x02 \x01(\x05R\fgoodQuantity\x12\x10\n" +
+	"\x03gid\x18\x03 \x01(\tR\x03gid\".\n" +
 	"\x12IncrRepertoryReply\x12\x18\n" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\".\n" +
 	"\x13GetRepertoryRequest\x12\x17\n" +
-	"\agood_id\x18\x01 \x01(\rR\x06goodId\"J\n" +
-	"\x11GetRepertoryReply\x125\n" +
-	"\trepertory\x18\x01 \x01(\v2\x17.repertory.v1.RepertoryR\trepertory2\xea\x02\n" +
+	"\agood_id\x18\x01 \x01(\rR\x06goodId\"d\n" +
+	"\x11GetRepertoryReply\x12\x18\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\x125\n" +
+	"\trepertory\x18\x02 \x01(\v2\x17.repertory.v1.RepertoryR\trepertory2\xea\x02\n" +
 	"\x10RepertoryService\x12q\n" +
 	"\rDecrRepertory\x12\".repertory.v1.DecrRepertoryRequest\x1a .repertory.v1.DecrRepertoryReply\"\x1a\x82\xd3\xe4\x93\x02\x14:\x01*\"\x0f/repertory/decr\x12q\n" +
 	"\rIncrRepertory\x12\".repertory.v1.IncrRepertoryRequest\x1a .repertory.v1.IncrRepertoryReply\"\x1a\x82\xd3\xe4\x93\x02\x14:\x01*\"\x0f/repertory/incr\x12p\n" +

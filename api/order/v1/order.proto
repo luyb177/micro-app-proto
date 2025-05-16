@@ -26,6 +26,7 @@ message CreateOrderReply {
 
 message CancelOrderRequest {
   string order_id = 1;
+  string gid = 2;
 }
 
 message CancelOrderReply {
