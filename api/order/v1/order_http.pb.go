@@ -33,7 +33,7 @@ func RegisterOrderServiceHTTPServer(s *http.Server, srv OrderServiceHTTPServer) 
 	r := s.Route("/")
 	r.POST("/order/add", _OrderService_CreateOrder0_HTTP_Handler(srv))
 	r.POST("/order/cancel", _OrderService_CancelOrder0_HTTP_Handler(srv))
-	r.GET("/order/{id}", _OrderService_GetOrder0_HTTP_Handler(srv))
+	r.GET("/order/{order_id}", _OrderService_GetOrder0_HTTP_Handler(srv))
 }
 
 func _OrderService_CreateOrder0_HTTP_Handler(srv OrderServiceHTTPServer) func(ctx http.Context) error {
@@ -144,7 +144,7 @@ func (c *OrderServiceHTTPClientImpl) CreateOrder(ctx context.Context, in *Create
 
 func (c *OrderServiceHTTPClientImpl) GetOrder(ctx context.Context, in *GetOrderRequest, opts ...http.CallOption) (*GetOrderReply, error) {
 	var out GetOrderReply
-	pattern := "/order/{id}"
+	pattern := "/order/{order_id}"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation(OperationOrderServiceGetOrder))
 	opts = append(opts, http.PathTemplate(pattern))

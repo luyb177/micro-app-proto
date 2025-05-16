@@ -28,6 +28,7 @@ type Order struct {
 	UserId        uint32                 `protobuf:"varint,2,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
 	GoodId        uint32                 `protobuf:"varint,3,opt,name=good_id,json=goodId,proto3" json:"good_id,omitempty"`
 	GoodQuantity  uint32                 `protobuf:"varint,4,opt,name=good_quantity,json=goodQuantity,proto3" json:"good_quantity,omitempty"`
+	OrderId       string                 `protobuf:"bytes,5,opt,name=order_id,json=orderId,proto3" json:"order_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -88,6 +89,13 @@ func (x *Order) GetGoodQuantity() uint32 {
 		return x.GoodQuantity
 	}
 	return 0
+}
+
+func (x *Order) GetOrderId() string {
+	if x != nil {
+		return x.OrderId
+	}
+	return ""
 }
 
 type CreateOrderRequest struct {
@@ -153,6 +161,7 @@ func (x *CreateOrderRequest) GetGoodQuantity() uint32 {
 type CreateOrderReply struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
+	OrderId       string                 `protobuf:"bytes,2,opt,name=order_id,json=orderId,proto3" json:"order_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -194,11 +203,16 @@ func (x *CreateOrderReply) GetSuccess() bool {
 	return false
 }
 
+func (x *CreateOrderReply) GetOrderId() string {
+	if x != nil {
+		return x.OrderId
+	}
+	return ""
+}
+
 type CancelOrderRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	UserId        uint32                 `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
-	GoodId        uint32                 `protobuf:"varint,2,opt,name=good_id,json=goodId,proto3" json:"good_id,omitempty"`
-	GoodQuantity  uint32                 `protobuf:"varint,3,opt,name=good_quantity,json=goodQuantity,proto3" json:"good_quantity,omitempty"`
+	OrderId       string                 `protobuf:"bytes,1,opt,name=order_id,json=orderId,proto3" json:"order_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -233,25 +247,11 @@ func (*CancelOrderRequest) Descriptor() ([]byte, []int) {
 	return file_api_order_v1_order_proto_rawDescGZIP(), []int{3}
 }
 
-func (x *CancelOrderRequest) GetUserId() uint32 {
+func (x *CancelOrderRequest) GetOrderId() string {
 	if x != nil {
-		return x.UserId
+		return x.OrderId
 	}
-	return 0
-}
-
-func (x *CancelOrderRequest) GetGoodId() uint32 {
-	if x != nil {
-		return x.GoodId
-	}
-	return 0
-}
-
-func (x *CancelOrderRequest) GetGoodQuantity() uint32 {
-	if x != nil {
-		return x.GoodQuantity
-	}
-	return 0
+	return ""
 }
 
 type CancelOrderReply struct {
@@ -300,7 +300,7 @@ func (x *CancelOrderReply) GetSuccess() bool {
 
 type GetOrderRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            uint32                 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	OrderId       string                 `protobuf:"bytes,1,opt,name=order_id,json=orderId,proto3" json:"order_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -335,11 +335,11 @@ func (*GetOrderRequest) Descriptor() ([]byte, []int) {
 	return file_api_order_v1_order_proto_rawDescGZIP(), []int{5}
 }
 
-func (x *GetOrderRequest) GetId() uint32 {
+func (x *GetOrderRequest) GetOrderId() string {
 	if x != nil {
-		return x.Id
+		return x.OrderId
 	}
-	return 0
+	return ""
 }
 
 type GetOrderReply struct {
@@ -398,34 +398,34 @@ var File_api_order_v1_order_proto protoreflect.FileDescriptor
 
 const file_api_order_v1_order_proto_rawDesc = "" +
 	"\n" +
-	"\x18api/order/v1/order.proto\x12\border.v1\x1a\x1cgoogle/api/annotations.proto\"n\n" +
+	"\x18api/order/v1/order.proto\x12\border.v1\x1a\x1cgoogle/api/annotations.proto\"\x89\x01\n" +
 	"\x05Order\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\rR\x02id\x12\x17\n" +
 	"\auser_id\x18\x02 \x01(\rR\x06userId\x12\x17\n" +
 	"\agood_id\x18\x03 \x01(\rR\x06goodId\x12#\n" +
-	"\rgood_quantity\x18\x04 \x01(\rR\fgoodQuantity\"k\n" +
+	"\rgood_quantity\x18\x04 \x01(\rR\fgoodQuantity\x12\x19\n" +
+	"\border_id\x18\x05 \x01(\tR\aorderId\"k\n" +
 	"\x12CreateOrderRequest\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\rR\x06userId\x12\x17\n" +
 	"\agood_id\x18\x02 \x01(\rR\x06goodId\x12#\n" +
-	"\rgood_quantity\x18\x03 \x01(\rR\fgoodQuantity\",\n" +
+	"\rgood_quantity\x18\x03 \x01(\rR\fgoodQuantity\"G\n" +
 	"\x10CreateOrderReply\x12\x18\n" +
-	"\asuccess\x18\x01 \x01(\bR\asuccess\"k\n" +
-	"\x12CancelOrderRequest\x12\x17\n" +
-	"\auser_id\x18\x01 \x01(\rR\x06userId\x12\x17\n" +
-	"\agood_id\x18\x02 \x01(\rR\x06goodId\x12#\n" +
-	"\rgood_quantity\x18\x03 \x01(\rR\fgoodQuantity\",\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x19\n" +
+	"\border_id\x18\x02 \x01(\tR\aorderId\"/\n" +
+	"\x12CancelOrderRequest\x12\x19\n" +
+	"\border_id\x18\x01 \x01(\tR\aorderId\",\n" +
 	"\x10CancelOrderReply\x12\x18\n" +
-	"\asuccess\x18\x01 \x01(\bR\asuccess\"!\n" +
-	"\x0fGetOrderRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\rR\x02id\"P\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\",\n" +
+	"\x0fGetOrderRequest\x12\x19\n" +
+	"\border_id\x18\x01 \x01(\tR\aorderId\"P\n" +
 	"\rGetOrderReply\x12\x18\n" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\x12%\n" +
-	"\x05order\x18\x02 \x01(\v2\x0f.order.v1.OrderR\x05order2\xa6\x02\n" +
+	"\x05order\x18\x02 \x01(\v2\x0f.order.v1.OrderR\x05order2\xac\x02\n" +
 	"\fOrderService\x12^\n" +
 	"\vCreateOrder\x12\x1c.order.v1.CreateOrderRequest\x1a\x1a.order.v1.CreateOrderReply\"\x15\x82\xd3\xe4\x93\x02\x0f:\x01*\"\n" +
 	"/order/add\x12a\n" +
-	"\vCancelOrder\x12\x1c.order.v1.CancelOrderRequest\x1a\x1a.order.v1.CancelOrderReply\"\x18\x82\xd3\xe4\x93\x02\x12:\x01*\"\r/order/cancel\x12S\n" +
-	"\bGetOrder\x12\x19.order.v1.GetOrderRequest\x1a\x17.order.v1.GetOrderReply\"\x13\x82\xd3\xe4\x93\x02\r\x12\v/order/{id}B\x11Z\x0fapi/order/v1;v1b\x06proto3"
+	"\vCancelOrder\x12\x1c.order.v1.CancelOrderRequest\x1a\x1a.order.v1.CancelOrderReply\"\x18\x82\xd3\xe4\x93\x02\x12:\x01*\"\r/order/cancel\x12Y\n" +
+	"\bGetOrder\x12\x19.order.v1.GetOrderRequest\x1a\x17.order.v1.GetOrderReply\"\x19\x82\xd3\xe4\x93\x02\x13\x12\x11/order/{order_id}B\x11Z\x0fapi/order/v1;v1b\x06proto3"
 
 var (
 	file_api_order_v1_order_proto_rawDescOnce sync.Once

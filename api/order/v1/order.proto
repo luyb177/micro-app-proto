@@ -9,6 +9,7 @@ message Order {
   uint32 user_id = 2;
   uint32 good_id = 3;
   uint32 good_quantity = 4;
+  string order_id = 5;
 }
 
 message CreateOrderRequest {
@@ -19,12 +20,11 @@ message CreateOrderRequest {
 
 message CreateOrderReply {
   bool success = 1;
+  string order_id = 2;
 }
 
 message CancelOrderRequest {
-  uint32 user_id = 1;
-  uint32 good_id = 2;
-  uint32 good_quantity = 3;
+  string order_id = 1;
 }
 
 message CancelOrderReply {
@@ -32,7 +32,7 @@ message CancelOrderReply {
 }
 
 message GetOrderRequest {
-  uint32 id = 1;
+  string order_id = 1;
 }
 message GetOrderReply {
   bool success = 1;
@@ -54,7 +54,7 @@ service OrderService {
   }
   rpc GetOrder(GetOrderRequest) returns (GetOrderReply){
     option (google.api.http) = {
-      get: "/order/{id}"
+      get: "/order/{order_id}"
     };
   }
 }
