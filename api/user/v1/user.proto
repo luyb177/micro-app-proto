@@ -19,14 +19,24 @@ message RegisterReply{
   User user = 2;
 }
 
-message PurchaseRequest{
+message DecrMoneyRequest {
   uint32 user_id = 1;
-  uint32 good_id = 2;
-  uint32 good_quantity = 3; // 购买数量
+  uint32 money = 2;
+  string gid = 3;
 }
 
-message PurchaseReply{
-  bool success = 2;
+message DecrMoneyReply{
+  bool success = 1;
+}
+
+message IncrMoneyRequest{
+  uint32 user_id = 1;
+  uint32 money = 2;
+  string gid = 3;
+}
+
+message IncrMoneyReply{
+  bool success = 1;
 }
 
 message GetUserRequest{
@@ -45,9 +55,15 @@ service Users {
       body: "*"
     };
   }
-  rpc Purchase(PurchaseRequest) returns (PurchaseReply){
+  rpc DecrMoney(DecrMoneyRequest) returns (DecrMoneyReply){
     option (google.api.http) = {
-      post: "/purchase"
+      post: "/decr"
+      body: "*"
+    };
+  }
+  rpc IncrMoney(IncrMoneyRequest) returns (IncrMoneyReply){
+    option (google.api.http) = {
+      post: "/incr"
       body: "*"
     };
   }

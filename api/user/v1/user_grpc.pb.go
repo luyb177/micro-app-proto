@@ -19,9 +19,10 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Users_Register_FullMethodName = "/user.v1.Users/Register"
-	Users_Purchase_FullMethodName = "/user.v1.Users/Purchase"
-	Users_GetUser_FullMethodName  = "/user.v1.Users/GetUser"
+	Users_Register_FullMethodName  = "/user.v1.Users/Register"
+	Users_DecrMoney_FullMethodName = "/user.v1.Users/DecrMoney"
+	Users_IncrMoney_FullMethodName = "/user.v1.Users/IncrMoney"
+	Users_GetUser_FullMethodName   = "/user.v1.Users/GetUser"
 )
 
 // UsersClient is the client API for Users service.
@@ -29,7 +30,8 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type UsersClient interface {
 	Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*RegisterReply, error)
-	Purchase(ctx context.Context, in *PurchaseRequest, opts ...grpc.CallOption) (*PurchaseReply, error)
+	DecrMoney(ctx context.Context, in *DecrMoneyRequest, opts ...grpc.CallOption) (*DecrMoneyReply, error)
+	IncrMoney(ctx context.Context, in *IncrMoneyRequest, opts ...grpc.CallOption) (*IncrMoneyReply, error)
 	GetUser(ctx context.Context, in *GetUserRequest, opts ...grpc.CallOption) (*GetUserReply, error)
 }
 
@@ -51,10 +53,20 @@ func (c *usersClient) Register(ctx context.Context, in *RegisterRequest, opts ..
 	return out, nil
 }
 
-func (c *usersClient) Purchase(ctx context.Context, in *PurchaseRequest, opts ...grpc.CallOption) (*PurchaseReply, error) {
+func (c *usersClient) DecrMoney(ctx context.Context, in *DecrMoneyRequest, opts ...grpc.CallOption) (*DecrMoneyReply, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(PurchaseReply)
-	err := c.cc.Invoke(ctx, Users_Purchase_FullMethodName, in, out, cOpts...)
+	out := new(DecrMoneyReply)
+	err := c.cc.Invoke(ctx, Users_DecrMoney_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *usersClient) IncrMoney(ctx context.Context, in *IncrMoneyRequest, opts ...grpc.CallOption) (*IncrMoneyReply, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(IncrMoneyReply)
+	err := c.cc.Invoke(ctx, Users_IncrMoney_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -76,7 +88,8 @@ func (c *usersClient) GetUser(ctx context.Context, in *GetUserRequest, opts ...g
 // for forward compatibility.
 type UsersServer interface {
 	Register(context.Context, *RegisterRequest) (*RegisterReply, error)
-	Purchase(context.Context, *PurchaseRequest) (*PurchaseReply, error)
+	DecrMoney(context.Context, *DecrMoneyRequest) (*DecrMoneyReply, error)
+	IncrMoney(context.Context, *IncrMoneyRequest) (*IncrMoneyReply, error)
 	GetUser(context.Context, *GetUserRequest) (*GetUserReply, error)
 	mustEmbedUnimplementedUsersServer()
 }
@@ -91,8 +104,11 @@ type UnimplementedUsersServer struct{}
 func (UnimplementedUsersServer) Register(context.Context, *RegisterRequest) (*RegisterReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Register not implemented")
 }
-func (UnimplementedUsersServer) Purchase(context.Context, *PurchaseRequest) (*PurchaseReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Purchase not implemented")
+func (UnimplementedUsersServer) DecrMoney(context.Context, *DecrMoneyRequest) (*DecrMoneyReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DecrMoney not implemented")
+}
+func (UnimplementedUsersServer) IncrMoney(context.Context, *IncrMoneyRequest) (*IncrMoneyReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method IncrMoney not implemented")
 }
 func (UnimplementedUsersServer) GetUser(context.Context, *GetUserRequest) (*GetUserReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUser not implemented")
@@ -136,20 +152,38 @@ func _Users_Register_Handler(srv interface{}, ctx context.Context, dec func(inte
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Users_Purchase_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(PurchaseRequest)
+func _Users_DecrMoney_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DecrMoneyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UsersServer).Purchase(ctx, in)
+		return srv.(UsersServer).DecrMoney(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Users_Purchase_FullMethodName,
+		FullMethod: Users_DecrMoney_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UsersServer).Purchase(ctx, req.(*PurchaseRequest))
+		return srv.(UsersServer).DecrMoney(ctx, req.(*DecrMoneyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Users_IncrMoney_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(IncrMoneyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UsersServer).IncrMoney(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Users_IncrMoney_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UsersServer).IncrMoney(ctx, req.(*IncrMoneyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -184,8 +218,12 @@ var Users_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Users_Register_Handler,
 		},
 		{
-			MethodName: "Purchase",
-			Handler:    _Users_Purchase_Handler,
+			MethodName: "DecrMoney",
+			Handler:    _Users_DecrMoney_Handler,
+		},
+		{
+			MethodName: "IncrMoney",
+			Handler:    _Users_IncrMoney_Handler,
 		},
 		{
 			MethodName: "GetUser",

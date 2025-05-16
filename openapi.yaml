@@ -6,16 +6,16 @@ info:
     title: Users API
     version: 0.0.1
 paths:
-    /purchase:
+    /decr:
         post:
             tags:
                 - Users
-            operationId: Users_Purchase
+            operationId: Users_DecrMoney
             requestBody:
                 content:
                     application/json:
                         schema:
-                            $ref: '#/components/schemas/PurchaseRequest'
+                            $ref: '#/components/schemas/DecrMoneyRequest'
                 required: true
             responses:
                 "200":
@@ -23,7 +23,31 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/PurchaseReply'
+                                $ref: '#/components/schemas/DecrMoneyReply'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /incr:
+        post:
+            tags:
+                - Users
+            operationId: Users_IncrMoney
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/IncrMoneyRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/IncrMoneyReply'
                 default:
                     description: Default error response
                     content:
@@ -81,6 +105,22 @@ paths:
                                 $ref: '#/components/schemas/Status'
 components:
     schemas:
+        DecrMoneyReply:
+            type: object
+            properties:
+                success:
+                    type: boolean
+        DecrMoneyRequest:
+            type: object
+            properties:
+                userId:
+                    type: integer
+                    format: uint32
+                money:
+                    type: integer
+                    format: uint32
+                gid:
+                    type: string
         GetUserReply:
             type: object
             properties:
@@ -96,23 +136,22 @@ components:
                     description: The type of the serialized message.
             additionalProperties: true
             description: Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
-        PurchaseReply:
+        IncrMoneyReply:
             type: object
             properties:
                 success:
                     type: boolean
-        PurchaseRequest:
+        IncrMoneyRequest:
             type: object
             properties:
                 userId:
                     type: integer
                     format: uint32
-                goodId:
+                money:
                     type: integer
                     format: uint32
-                goodQuantity:
-                    type: integer
-                    format: uint32
+                gid:
+                    type: string
         RegisterReply:
             type: object
             properties:

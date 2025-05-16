@@ -178,29 +178,29 @@ func (x *RegisterReply) GetUser() *User {
 	return nil
 }
 
-type PurchaseRequest struct {
+type DecrMoneyRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	UserId        uint32                 `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
-	GoodId        uint32                 `protobuf:"varint,2,opt,name=good_id,json=goodId,proto3" json:"good_id,omitempty"`
-	GoodQuantity  uint32                 `protobuf:"varint,3,opt,name=good_quantity,json=goodQuantity,proto3" json:"good_quantity,omitempty"` // 购买数量
+	Money         uint32                 `protobuf:"varint,2,opt,name=money,proto3" json:"money,omitempty"`
+	Gid           string                 `protobuf:"bytes,3,opt,name=gid,proto3" json:"gid,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *PurchaseRequest) Reset() {
-	*x = PurchaseRequest{}
+func (x *DecrMoneyRequest) Reset() {
+	*x = DecrMoneyRequest{}
 	mi := &file_api_user_v1_user_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *PurchaseRequest) String() string {
+func (x *DecrMoneyRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*PurchaseRequest) ProtoMessage() {}
+func (*DecrMoneyRequest) ProtoMessage() {}
 
-func (x *PurchaseRequest) ProtoReflect() protoreflect.Message {
+func (x *DecrMoneyRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_api_user_v1_user_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -212,53 +212,53 @@ func (x *PurchaseRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use PurchaseRequest.ProtoReflect.Descriptor instead.
-func (*PurchaseRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use DecrMoneyRequest.ProtoReflect.Descriptor instead.
+func (*DecrMoneyRequest) Descriptor() ([]byte, []int) {
 	return file_api_user_v1_user_proto_rawDescGZIP(), []int{3}
 }
 
-func (x *PurchaseRequest) GetUserId() uint32 {
+func (x *DecrMoneyRequest) GetUserId() uint32 {
 	if x != nil {
 		return x.UserId
 	}
 	return 0
 }
 
-func (x *PurchaseRequest) GetGoodId() uint32 {
+func (x *DecrMoneyRequest) GetMoney() uint32 {
 	if x != nil {
-		return x.GoodId
+		return x.Money
 	}
 	return 0
 }
 
-func (x *PurchaseRequest) GetGoodQuantity() uint32 {
+func (x *DecrMoneyRequest) GetGid() string {
 	if x != nil {
-		return x.GoodQuantity
+		return x.Gid
 	}
-	return 0
+	return ""
 }
 
-type PurchaseReply struct {
+type DecrMoneyReply struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Success       bool                   `protobuf:"varint,2,opt,name=success,proto3" json:"success,omitempty"`
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *PurchaseReply) Reset() {
-	*x = PurchaseReply{}
+func (x *DecrMoneyReply) Reset() {
+	*x = DecrMoneyReply{}
 	mi := &file_api_user_v1_user_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *PurchaseReply) String() string {
+func (x *DecrMoneyReply) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*PurchaseReply) ProtoMessage() {}
+func (*DecrMoneyReply) ProtoMessage() {}
 
-func (x *PurchaseReply) ProtoReflect() protoreflect.Message {
+func (x *DecrMoneyReply) ProtoReflect() protoreflect.Message {
 	mi := &file_api_user_v1_user_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -270,12 +270,116 @@ func (x *PurchaseReply) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use PurchaseReply.ProtoReflect.Descriptor instead.
-func (*PurchaseReply) Descriptor() ([]byte, []int) {
+// Deprecated: Use DecrMoneyReply.ProtoReflect.Descriptor instead.
+func (*DecrMoneyReply) Descriptor() ([]byte, []int) {
 	return file_api_user_v1_user_proto_rawDescGZIP(), []int{4}
 }
 
-func (x *PurchaseReply) GetSuccess() bool {
+func (x *DecrMoneyReply) GetSuccess() bool {
+	if x != nil {
+		return x.Success
+	}
+	return false
+}
+
+type IncrMoneyRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	UserId        uint32                 `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	Money         uint32                 `protobuf:"varint,2,opt,name=money,proto3" json:"money,omitempty"`
+	Gid           string                 `protobuf:"bytes,3,opt,name=gid,proto3" json:"gid,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *IncrMoneyRequest) Reset() {
+	*x = IncrMoneyRequest{}
+	mi := &file_api_user_v1_user_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *IncrMoneyRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*IncrMoneyRequest) ProtoMessage() {}
+
+func (x *IncrMoneyRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_user_v1_user_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use IncrMoneyRequest.ProtoReflect.Descriptor instead.
+func (*IncrMoneyRequest) Descriptor() ([]byte, []int) {
+	return file_api_user_v1_user_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *IncrMoneyRequest) GetUserId() uint32 {
+	if x != nil {
+		return x.UserId
+	}
+	return 0
+}
+
+func (x *IncrMoneyRequest) GetMoney() uint32 {
+	if x != nil {
+		return x.Money
+	}
+	return 0
+}
+
+func (x *IncrMoneyRequest) GetGid() string {
+	if x != nil {
+		return x.Gid
+	}
+	return ""
+}
+
+type IncrMoneyReply struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *IncrMoneyReply) Reset() {
+	*x = IncrMoneyReply{}
+	mi := &file_api_user_v1_user_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *IncrMoneyReply) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*IncrMoneyReply) ProtoMessage() {}
+
+func (x *IncrMoneyReply) ProtoReflect() protoreflect.Message {
+	mi := &file_api_user_v1_user_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use IncrMoneyReply.ProtoReflect.Descriptor instead.
+func (*IncrMoneyReply) Descriptor() ([]byte, []int) {
+	return file_api_user_v1_user_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *IncrMoneyReply) GetSuccess() bool {
 	if x != nil {
 		return x.Success
 	}
@@ -291,7 +395,7 @@ type GetUserRequest struct {
 
 func (x *GetUserRequest) Reset() {
 	*x = GetUserRequest{}
-	mi := &file_api_user_v1_user_proto_msgTypes[5]
+	mi := &file_api_user_v1_user_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -303,7 +407,7 @@ func (x *GetUserRequest) String() string {
 func (*GetUserRequest) ProtoMessage() {}
 
 func (x *GetUserRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_user_v1_user_proto_msgTypes[5]
+	mi := &file_api_user_v1_user_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -316,7 +420,7 @@ func (x *GetUserRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetUserRequest.ProtoReflect.Descriptor instead.
 func (*GetUserRequest) Descriptor() ([]byte, []int) {
-	return file_api_user_v1_user_proto_rawDescGZIP(), []int{5}
+	return file_api_user_v1_user_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *GetUserRequest) GetId() uint32 {
@@ -336,7 +440,7 @@ type GetUserReply struct {
 
 func (x *GetUserReply) Reset() {
 	*x = GetUserReply{}
-	mi := &file_api_user_v1_user_proto_msgTypes[6]
+	mi := &file_api_user_v1_user_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -348,7 +452,7 @@ func (x *GetUserReply) String() string {
 func (*GetUserReply) ProtoMessage() {}
 
 func (x *GetUserReply) ProtoReflect() protoreflect.Message {
-	mi := &file_api_user_v1_user_proto_msgTypes[6]
+	mi := &file_api_user_v1_user_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -361,7 +465,7 @@ func (x *GetUserReply) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetUserReply.ProtoReflect.Descriptor instead.
 func (*GetUserReply) Descriptor() ([]byte, []int) {
-	return file_api_user_v1_user_proto_rawDescGZIP(), []int{6}
+	return file_api_user_v1_user_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *GetUserReply) GetSuccess() bool {
@@ -391,21 +495,30 @@ const file_api_user_v1_user_proto_rawDesc = "" +
 	"\x04name\x18\x01 \x01(\tR\x04name\"L\n" +
 	"\rRegisterReply\x12\x18\n" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\x12!\n" +
-	"\x04user\x18\x02 \x01(\v2\r.user.v1.UserR\x04user\"h\n" +
-	"\x0fPurchaseRequest\x12\x17\n" +
-	"\auser_id\x18\x01 \x01(\rR\x06userId\x12\x17\n" +
-	"\agood_id\x18\x02 \x01(\rR\x06goodId\x12#\n" +
-	"\rgood_quantity\x18\x03 \x01(\rR\fgoodQuantity\")\n" +
-	"\rPurchaseReply\x12\x18\n" +
-	"\asuccess\x18\x02 \x01(\bR\asuccess\" \n" +
+	"\x04user\x18\x02 \x01(\v2\r.user.v1.UserR\x04user\"S\n" +
+	"\x10DecrMoneyRequest\x12\x17\n" +
+	"\auser_id\x18\x01 \x01(\rR\x06userId\x12\x14\n" +
+	"\x05money\x18\x02 \x01(\rR\x05money\x12\x10\n" +
+	"\x03gid\x18\x03 \x01(\tR\x03gid\"*\n" +
+	"\x0eDecrMoneyReply\x12\x18\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\"S\n" +
+	"\x10IncrMoneyRequest\x12\x17\n" +
+	"\auser_id\x18\x01 \x01(\rR\x06userId\x12\x14\n" +
+	"\x05money\x18\x02 \x01(\rR\x05money\x12\x10\n" +
+	"\x03gid\x18\x03 \x01(\tR\x03gid\"*\n" +
+	"\x0eIncrMoneyReply\x12\x18\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\" \n" +
 	"\x0eGetUserRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\rR\x02id\"K\n" +
 	"\fGetUserReply\x12\x18\n" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\x12!\n" +
-	"\x04user\x18\x02 \x01(\v2\r.user.v1.UserR\x04user2\xfe\x01\n" +
+	"\x04user\x18\x02 \x01(\v2\r.user.v1.UserR\x04user2\xd0\x02\n" +
 	"\x05Users\x12R\n" +
-	"\bRegister\x12\x18.user.v1.RegisterRequest\x1a\x16.user.v1.RegisterReply\"\x14\x82\xd3\xe4\x93\x02\x0e:\x01*\"\t/register\x12R\n" +
-	"\bPurchase\x12\x18.user.v1.PurchaseRequest\x1a\x16.user.v1.PurchaseReply\"\x14\x82\xd3\xe4\x93\x02\x0e:\x01*\"\t/purchase\x12M\n" +
+	"\bRegister\x12\x18.user.v1.RegisterRequest\x1a\x16.user.v1.RegisterReply\"\x14\x82\xd3\xe4\x93\x02\x0e:\x01*\"\t/register\x12Q\n" +
+	"\tDecrMoney\x12\x19.user.v1.DecrMoneyRequest\x1a\x17.user.v1.DecrMoneyReply\"\x10\x82\xd3\xe4\x93\x02\n" +
+	":\x01*\"\x05/decr\x12Q\n" +
+	"\tIncrMoney\x12\x19.user.v1.IncrMoneyRequest\x1a\x17.user.v1.IncrMoneyReply\"\x10\x82\xd3\xe4\x93\x02\n" +
+	":\x01*\"\x05/incr\x12M\n" +
 	"\aGetUser\x12\x17.user.v1.GetUserRequest\x1a\x15.user.v1.GetUserReply\"\x12\x82\xd3\xe4\x93\x02\f\x12\n" +
 	"/user/{id}B\x10Z\x0eapi/user/v1;v1b\x06proto3"
 
@@ -421,27 +534,31 @@ func file_api_user_v1_user_proto_rawDescGZIP() []byte {
 	return file_api_user_v1_user_proto_rawDescData
 }
 
-var file_api_user_v1_user_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
+var file_api_user_v1_user_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
 var file_api_user_v1_user_proto_goTypes = []any{
-	(*User)(nil),            // 0: user.v1.User
-	(*RegisterRequest)(nil), // 1: user.v1.RegisterRequest
-	(*RegisterReply)(nil),   // 2: user.v1.RegisterReply
-	(*PurchaseRequest)(nil), // 3: user.v1.PurchaseRequest
-	(*PurchaseReply)(nil),   // 4: user.v1.PurchaseReply
-	(*GetUserRequest)(nil),  // 5: user.v1.GetUserRequest
-	(*GetUserReply)(nil),    // 6: user.v1.GetUserReply
+	(*User)(nil),             // 0: user.v1.User
+	(*RegisterRequest)(nil),  // 1: user.v1.RegisterRequest
+	(*RegisterReply)(nil),    // 2: user.v1.RegisterReply
+	(*DecrMoneyRequest)(nil), // 3: user.v1.DecrMoneyRequest
+	(*DecrMoneyReply)(nil),   // 4: user.v1.DecrMoneyReply
+	(*IncrMoneyRequest)(nil), // 5: user.v1.IncrMoneyRequest
+	(*IncrMoneyReply)(nil),   // 6: user.v1.IncrMoneyReply
+	(*GetUserRequest)(nil),   // 7: user.v1.GetUserRequest
+	(*GetUserReply)(nil),     // 8: user.v1.GetUserReply
 }
 var file_api_user_v1_user_proto_depIdxs = []int32{
 	0, // 0: user.v1.RegisterReply.user:type_name -> user.v1.User
 	0, // 1: user.v1.GetUserReply.user:type_name -> user.v1.User
 	1, // 2: user.v1.Users.Register:input_type -> user.v1.RegisterRequest
-	3, // 3: user.v1.Users.Purchase:input_type -> user.v1.PurchaseRequest
-	5, // 4: user.v1.Users.GetUser:input_type -> user.v1.GetUserRequest
-	2, // 5: user.v1.Users.Register:output_type -> user.v1.RegisterReply
-	4, // 6: user.v1.Users.Purchase:output_type -> user.v1.PurchaseReply
-	6, // 7: user.v1.Users.GetUser:output_type -> user.v1.GetUserReply
-	5, // [5:8] is the sub-list for method output_type
-	2, // [2:5] is the sub-list for method input_type
+	3, // 3: user.v1.Users.DecrMoney:input_type -> user.v1.DecrMoneyRequest
+	5, // 4: user.v1.Users.IncrMoney:input_type -> user.v1.IncrMoneyRequest
+	7, // 5: user.v1.Users.GetUser:input_type -> user.v1.GetUserRequest
+	2, // 6: user.v1.Users.Register:output_type -> user.v1.RegisterReply
+	4, // 7: user.v1.Users.DecrMoney:output_type -> user.v1.DecrMoneyReply
+	6, // 8: user.v1.Users.IncrMoney:output_type -> user.v1.IncrMoneyReply
+	8, // 9: user.v1.Users.GetUser:output_type -> user.v1.GetUserReply
+	6, // [6:10] is the sub-list for method output_type
+	2, // [2:6] is the sub-list for method input_type
 	2, // [2:2] is the sub-list for extension type_name
 	2, // [2:2] is the sub-list for extension extendee
 	0, // [0:2] is the sub-list for field type_name
@@ -458,7 +575,7 @@ func file_api_user_v1_user_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_api_user_v1_user_proto_rawDesc), len(file_api_user_v1_user_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   7,
+			NumMessages:   9,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
