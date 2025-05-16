@@ -109,6 +109,8 @@ components:
                 goodQuantity:
                     type: integer
                     format: uint32
+                gid:
+                    type: string
         GetOrderReply:
             type: object
             properties:

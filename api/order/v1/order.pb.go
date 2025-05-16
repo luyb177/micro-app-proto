@@ -103,6 +103,7 @@ type CreateOrderRequest struct {
 	UserId        uint32                 `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
 	GoodId        uint32                 `protobuf:"varint,2,opt,name=good_id,json=goodId,proto3" json:"good_id,omitempty"`
 	GoodQuantity  uint32                 `protobuf:"varint,3,opt,name=good_quantity,json=goodQuantity,proto3" json:"good_quantity,omitempty"`
+	Gid           string                 `protobuf:"bytes,4,opt,name=gid,proto3" json:"gid,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -156,6 +157,13 @@ func (x *CreateOrderRequest) GetGoodQuantity() uint32 {
 		return x.GoodQuantity
 	}
 	return 0
+}
+
+func (x *CreateOrderRequest) GetGid() string {
+	if x != nil {
+		return x.Gid
+	}
+	return ""
 }
 
 type CreateOrderReply struct {
@@ -404,11 +412,12 @@ const file_api_order_v1_order_proto_rawDesc = "" +
 	"\auser_id\x18\x02 \x01(\rR\x06userId\x12\x17\n" +
 	"\agood_id\x18\x03 \x01(\rR\x06goodId\x12#\n" +
 	"\rgood_quantity\x18\x04 \x01(\rR\fgoodQuantity\x12\x19\n" +
-	"\border_id\x18\x05 \x01(\tR\aorderId\"k\n" +
+	"\border_id\x18\x05 \x01(\tR\aorderId\"}\n" +
 	"\x12CreateOrderRequest\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\rR\x06userId\x12\x17\n" +
 	"\agood_id\x18\x02 \x01(\rR\x06goodId\x12#\n" +
-	"\rgood_quantity\x18\x03 \x01(\rR\fgoodQuantity\"G\n" +
+	"\rgood_quantity\x18\x03 \x01(\rR\fgoodQuantity\x12\x10\n" +
+	"\x03gid\x18\x04 \x01(\tR\x03gid\"G\n" +
 	"\x10CreateOrderReply\x12\x18\n" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x19\n" +
 	"\border_id\x18\x02 \x01(\tR\aorderId\"/\n" +

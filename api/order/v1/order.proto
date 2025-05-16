@@ -16,6 +16,7 @@ message CreateOrderRequest {
   uint32 user_id = 1;
   uint32 good_id = 2;
   uint32 good_quantity = 3;
+  string gid = 4;
 }
 
 message CreateOrderReply {
