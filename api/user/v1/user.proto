@@ -48,6 +48,16 @@ message GetUserReply{
   User user = 2;
 }
 
+message BuGoosRequest{
+  uint32 user_id = 1;
+  uint32 goods_id = 2;
+  uint32 quantity = 3;
+}
+
+message BuGoosReply{
+  bool success = 1;
+}
+
 service Users {
   rpc Register (RegisterRequest) returns (RegisterReply) {
     option (google.api.http) = { // 支持生成http服务
@@ -70,6 +80,12 @@ service Users {
   rpc GetUser(GetUserRequest) returns (GetUserReply){
     option (google.api.http) = {
       get: "/user/{id}"
+    };
+  }
+  rpc BuyGoods(BuGoosRequest) returns (BuGoosReply){
+    option (google.api.http) = {
+      post: "/buy"
+      body: "*"
     };
   }
 }

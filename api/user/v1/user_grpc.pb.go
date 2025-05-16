@@ -23,6 +23,7 @@ const (
 	Users_DecrMoney_FullMethodName = "/user.v1.Users/DecrMoney"
 	Users_IncrMoney_FullMethodName = "/user.v1.Users/IncrMoney"
 	Users_GetUser_FullMethodName   = "/user.v1.Users/GetUser"
+	Users_BuyGoods_FullMethodName  = "/user.v1.Users/BuyGoods"
 )
 
 // UsersClient is the client API for Users service.
@@ -33,6 +34,7 @@ type UsersClient interface {
 	DecrMoney(ctx context.Context, in *DecrMoneyRequest, opts ...grpc.CallOption) (*DecrMoneyReply, error)
 	IncrMoney(ctx context.Context, in *IncrMoneyRequest, opts ...grpc.CallOption) (*IncrMoneyReply, error)
 	GetUser(ctx context.Context, in *GetUserRequest, opts ...grpc.CallOption) (*GetUserReply, error)
+	BuyGoods(ctx context.Context, in *BuGoosRequest, opts ...grpc.CallOption) (*BuGoosReply, error)
 }
 
 type usersClient struct {
@@ -83,6 +85,16 @@ func (c *usersClient) GetUser(ctx context.Context, in *GetUserRequest, opts ...g
 	return out, nil
 }
 
+func (c *usersClient) BuyGoods(ctx context.Context, in *BuGoosRequest, opts ...grpc.CallOption) (*BuGoosReply, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(BuGoosReply)
+	err := c.cc.Invoke(ctx, Users_BuyGoods_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UsersServer is the server API for Users service.
 // All implementations must embed UnimplementedUsersServer
 // for forward compatibility.
@@ -91,6 +103,7 @@ type UsersServer interface {
 	DecrMoney(context.Context, *DecrMoneyRequest) (*DecrMoneyReply, error)
 	IncrMoney(context.Context, *IncrMoneyRequest) (*IncrMoneyReply, error)
 	GetUser(context.Context, *GetUserRequest) (*GetUserReply, error)
+	BuyGoods(context.Context, *BuGoosRequest) (*BuGoosReply, error)
 	mustEmbedUnimplementedUsersServer()
 }
 
@@ -112,6 +125,9 @@ func (UnimplementedUsersServer) IncrMoney(context.Context, *IncrMoneyRequest) (*
 }
 func (UnimplementedUsersServer) GetUser(context.Context, *GetUserRequest) (*GetUserReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUser not implemented")
+}
+func (UnimplementedUsersServer) BuyGoods(context.Context, *BuGoosRequest) (*BuGoosReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method BuyGoods not implemented")
 }
 func (UnimplementedUsersServer) mustEmbedUnimplementedUsersServer() {}
 func (UnimplementedUsersServer) testEmbeddedByValue()               {}
@@ -206,6 +222,24 @@ func _Users_GetUser_Handler(srv interface{}, ctx context.Context, dec func(inter
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Users_BuyGoods_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BuGoosRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UsersServer).BuyGoods(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Users_BuyGoods_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UsersServer).BuyGoods(ctx, req.(*BuGoosRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Users_ServiceDesc is the grpc.ServiceDesc for Users service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -228,6 +262,10 @@ var Users_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetUser",
 			Handler:    _Users_GetUser_Handler,
+		},
+		{
+			MethodName: "BuyGoods",
+			Handler:    _Users_BuyGoods_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

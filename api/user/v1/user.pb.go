@@ -482,6 +482,110 @@ func (x *GetUserReply) GetUser() *User {
 	return nil
 }
 
+type BuGoosRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	UserId        uint32                 `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	GoodsId       uint32                 `protobuf:"varint,2,opt,name=goods_id,json=goodsId,proto3" json:"goods_id,omitempty"`
+	Quantity      uint32                 `protobuf:"varint,3,opt,name=quantity,proto3" json:"quantity,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *BuGoosRequest) Reset() {
+	*x = BuGoosRequest{}
+	mi := &file_api_user_v1_user_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *BuGoosRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*BuGoosRequest) ProtoMessage() {}
+
+func (x *BuGoosRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_user_v1_user_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use BuGoosRequest.ProtoReflect.Descriptor instead.
+func (*BuGoosRequest) Descriptor() ([]byte, []int) {
+	return file_api_user_v1_user_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *BuGoosRequest) GetUserId() uint32 {
+	if x != nil {
+		return x.UserId
+	}
+	return 0
+}
+
+func (x *BuGoosRequest) GetGoodsId() uint32 {
+	if x != nil {
+		return x.GoodsId
+	}
+	return 0
+}
+
+func (x *BuGoosRequest) GetQuantity() uint32 {
+	if x != nil {
+		return x.Quantity
+	}
+	return 0
+}
+
+type BuGoosReply struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *BuGoosReply) Reset() {
+	*x = BuGoosReply{}
+	mi := &file_api_user_v1_user_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *BuGoosReply) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*BuGoosReply) ProtoMessage() {}
+
+func (x *BuGoosReply) ProtoReflect() protoreflect.Message {
+	mi := &file_api_user_v1_user_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use BuGoosReply.ProtoReflect.Descriptor instead.
+func (*BuGoosReply) Descriptor() ([]byte, []int) {
+	return file_api_user_v1_user_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *BuGoosReply) GetSuccess() bool {
+	if x != nil {
+		return x.Success
+	}
+	return false
+}
+
 var File_api_user_v1_user_proto protoreflect.FileDescriptor
 
 const file_api_user_v1_user_proto_rawDesc = "" +
@@ -512,7 +616,13 @@ const file_api_user_v1_user_proto_rawDesc = "" +
 	"\x02id\x18\x01 \x01(\rR\x02id\"K\n" +
 	"\fGetUserReply\x12\x18\n" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\x12!\n" +
-	"\x04user\x18\x02 \x01(\v2\r.user.v1.UserR\x04user2\xd0\x02\n" +
+	"\x04user\x18\x02 \x01(\v2\r.user.v1.UserR\x04user\"_\n" +
+	"\rBuGoosRequest\x12\x17\n" +
+	"\auser_id\x18\x01 \x01(\rR\x06userId\x12\x19\n" +
+	"\bgoods_id\x18\x02 \x01(\rR\agoodsId\x12\x1a\n" +
+	"\bquantity\x18\x03 \x01(\rR\bquantity\"'\n" +
+	"\vBuGoosReply\x12\x18\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess2\x9b\x03\n" +
 	"\x05Users\x12R\n" +
 	"\bRegister\x12\x18.user.v1.RegisterRequest\x1a\x16.user.v1.RegisterReply\"\x14\x82\xd3\xe4\x93\x02\x0e:\x01*\"\t/register\x12Q\n" +
 	"\tDecrMoney\x12\x19.user.v1.DecrMoneyRequest\x1a\x17.user.v1.DecrMoneyReply\"\x10\x82\xd3\xe4\x93\x02\n" +
@@ -520,7 +630,8 @@ const file_api_user_v1_user_proto_rawDesc = "" +
 	"\tIncrMoney\x12\x19.user.v1.IncrMoneyRequest\x1a\x17.user.v1.IncrMoneyReply\"\x10\x82\xd3\xe4\x93\x02\n" +
 	":\x01*\"\x05/incr\x12M\n" +
 	"\aGetUser\x12\x17.user.v1.GetUserRequest\x1a\x15.user.v1.GetUserReply\"\x12\x82\xd3\xe4\x93\x02\f\x12\n" +
-	"/user/{id}B\x10Z\x0eapi/user/v1;v1b\x06proto3"
+	"/user/{id}\x12I\n" +
+	"\bBuyGoods\x12\x16.user.v1.BuGoosRequest\x1a\x14.user.v1.BuGoosReply\"\x0f\x82\xd3\xe4\x93\x02\t:\x01*\"\x04/buyB\x10Z\x0eapi/user/v1;v1b\x06proto3"
 
 var (
 	file_api_user_v1_user_proto_rawDescOnce sync.Once
@@ -534,7 +645,7 @@ func file_api_user_v1_user_proto_rawDescGZIP() []byte {
 	return file_api_user_v1_user_proto_rawDescData
 }
 
-var file_api_user_v1_user_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
+var file_api_user_v1_user_proto_msgTypes = make([]protoimpl.MessageInfo, 11)
 var file_api_user_v1_user_proto_goTypes = []any{
 	(*User)(nil),             // 0: user.v1.User
 	(*RegisterRequest)(nil),  // 1: user.v1.RegisterRequest
@@ -545,23 +656,27 @@ var file_api_user_v1_user_proto_goTypes = []any{
 	(*IncrMoneyReply)(nil),   // 6: user.v1.IncrMoneyReply
 	(*GetUserRequest)(nil),   // 7: user.v1.GetUserRequest
 	(*GetUserReply)(nil),     // 8: user.v1.GetUserReply
+	(*BuGoosRequest)(nil),    // 9: user.v1.BuGoosRequest
+	(*BuGoosReply)(nil),      // 10: user.v1.BuGoosReply
 }
 var file_api_user_v1_user_proto_depIdxs = []int32{
-	0, // 0: user.v1.RegisterReply.user:type_name -> user.v1.User
-	0, // 1: user.v1.GetUserReply.user:type_name -> user.v1.User
-	1, // 2: user.v1.Users.Register:input_type -> user.v1.RegisterRequest
-	3, // 3: user.v1.Users.DecrMoney:input_type -> user.v1.DecrMoneyRequest
-	5, // 4: user.v1.Users.IncrMoney:input_type -> user.v1.IncrMoneyRequest
-	7, // 5: user.v1.Users.GetUser:input_type -> user.v1.GetUserRequest
-	2, // 6: user.v1.Users.Register:output_type -> user.v1.RegisterReply
-	4, // 7: user.v1.Users.DecrMoney:output_type -> user.v1.DecrMoneyReply
-	6, // 8: user.v1.Users.IncrMoney:output_type -> user.v1.IncrMoneyReply
-	8, // 9: user.v1.Users.GetUser:output_type -> user.v1.GetUserReply
-	6, // [6:10] is the sub-list for method output_type
-	2, // [2:6] is the sub-list for method input_type
-	2, // [2:2] is the sub-list for extension type_name
-	2, // [2:2] is the sub-list for extension extendee
-	0, // [0:2] is the sub-list for field type_name
+	0,  // 0: user.v1.RegisterReply.user:type_name -> user.v1.User
+	0,  // 1: user.v1.GetUserReply.user:type_name -> user.v1.User
+	1,  // 2: user.v1.Users.Register:input_type -> user.v1.RegisterRequest
+	3,  // 3: user.v1.Users.DecrMoney:input_type -> user.v1.DecrMoneyRequest
+	5,  // 4: user.v1.Users.IncrMoney:input_type -> user.v1.IncrMoneyRequest
+	7,  // 5: user.v1.Users.GetUser:input_type -> user.v1.GetUserRequest
+	9,  // 6: user.v1.Users.BuyGoods:input_type -> user.v1.BuGoosRequest
+	2,  // 7: user.v1.Users.Register:output_type -> user.v1.RegisterReply
+	4,  // 8: user.v1.Users.DecrMoney:output_type -> user.v1.DecrMoneyReply
+	6,  // 9: user.v1.Users.IncrMoney:output_type -> user.v1.IncrMoneyReply
+	8,  // 10: user.v1.Users.GetUser:output_type -> user.v1.GetUserReply
+	10, // 11: user.v1.Users.BuyGoods:output_type -> user.v1.BuGoosReply
+	7,  // [7:12] is the sub-list for method output_type
+	2,  // [2:7] is the sub-list for method input_type
+	2,  // [2:2] is the sub-list for extension type_name
+	2,  // [2:2] is the sub-list for extension extendee
+	0,  // [0:2] is the sub-list for field type_name
 }
 
 func init() { file_api_user_v1_user_proto_init() }
@@ -575,7 +690,7 @@ func file_api_user_v1_user_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_api_user_v1_user_proto_rawDesc), len(file_api_user_v1_user_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   9,
+			NumMessages:   11,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

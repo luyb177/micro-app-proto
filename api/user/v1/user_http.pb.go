@@ -19,12 +19,14 @@ var _ = binding.EncodeURL
 
 const _ = http.SupportPackageIsVersion1
 
+const OperationUsersBuyGoods = "/user.v1.Users/BuyGoods"
 const OperationUsersDecrMoney = "/user.v1.Users/DecrMoney"
 const OperationUsersGetUser = "/user.v1.Users/GetUser"
 const OperationUsersIncrMoney = "/user.v1.Users/IncrMoney"
 const OperationUsersRegister = "/user.v1.Users/Register"
 
 type UsersHTTPServer interface {
+	BuyGoods(context.Context, *BuGoosRequest) (*BuGoosReply, error)
 	DecrMoney(context.Context, *DecrMoneyRequest) (*DecrMoneyReply, error)
 	GetUser(context.Context, *GetUserRequest) (*GetUserReply, error)
 	IncrMoney(context.Context, *IncrMoneyRequest) (*IncrMoneyReply, error)
@@ -37,6 +39,7 @@ func RegisterUsersHTTPServer(s *http.Server, srv UsersHTTPServer) {
 	r.POST("/decr", _Users_DecrMoney0_HTTP_Handler(srv))
 	r.POST("/incr", _Users_IncrMoney0_HTTP_Handler(srv))
 	r.GET("/user/{id}", _Users_GetUser0_HTTP_Handler(srv))
+	r.POST("/buy", _Users_BuyGoods0_HTTP_Handler(srv))
 }
 
 func _Users_Register0_HTTP_Handler(srv UsersHTTPServer) func(ctx http.Context) error {
@@ -127,7 +130,30 @@ func _Users_GetUser0_HTTP_Handler(srv UsersHTTPServer) func(ctx http.Context) er
 	}
 }
 
+func _Users_BuyGoods0_HTTP_Handler(srv UsersHTTPServer) func(ctx http.Context) error {
+	return func(ctx http.Context) error {
+		var in BuGoosRequest
+		if err := ctx.Bind(&in); err != nil {
+			return err
+		}
+		if err := ctx.BindQuery(&in); err != nil {
+			return err
+		}
+		http.SetOperation(ctx, OperationUsersBuyGoods)
+		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
+			return srv.BuyGoods(ctx, req.(*BuGoosRequest))
+		})
+		out, err := h(ctx, &in)
+		if err != nil {
+			return err
+		}
+		reply := out.(*BuGoosReply)
+		return ctx.Result(200, reply)
+	}
+}
+
 type UsersHTTPClient interface {
+	BuyGoods(ctx context.Context, req *BuGoosRequest, opts ...http.CallOption) (rsp *BuGoosReply, err error)
 	DecrMoney(ctx context.Context, req *DecrMoneyRequest, opts ...http.CallOption) (rsp *DecrMoneyReply, err error)
 	GetUser(ctx context.Context, req *GetUserRequest, opts ...http.CallOption) (rsp *GetUserReply, err error)
 	IncrMoney(ctx context.Context, req *IncrMoneyRequest, opts ...http.CallOption) (rsp *IncrMoneyReply, err error)
@@ -140,6 +166,19 @@ type UsersHTTPClientImpl struct {
 
 func NewUsersHTTPClient(client *http.Client) UsersHTTPClient {
 	return &UsersHTTPClientImpl{client}
+}
+
+func (c *UsersHTTPClientImpl) BuyGoods(ctx context.Context, in *BuGoosRequest, opts ...http.CallOption) (*BuGoosReply, error) {
+	var out BuGoosReply
+	pattern := "/buy"
+	path := binding.EncodeURL(pattern, in, false)
+	opts = append(opts, http.Operation(OperationUsersBuyGoods))
+	opts = append(opts, http.PathTemplate(pattern))
+	err := c.cc.Invoke(ctx, "POST", path, in, &out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return &out, nil
 }
 
 func (c *UsersHTTPClientImpl) DecrMoney(ctx context.Context, in *DecrMoneyRequest, opts ...http.CallOption) (*DecrMoneyReply, error) {
