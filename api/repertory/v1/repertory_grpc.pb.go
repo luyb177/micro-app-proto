@@ -31,7 +31,7 @@ type RepertoryServiceClient interface {
 	// 减库存
 	DecrRepertory(ctx context.Context, in *DecrRepertoryRequest, opts ...grpc.CallOption) (*DecrRepertoryReply, error)
 	// 加库存
-	IncrRepertory(ctx context.Context, in *IncrRepertoryRequest, opts ...grpc.CallOption) (*IncrRepertoryReply, error)
+	IncrRepertory(ctx context.Context, in *DecrRepertoryRequest, opts ...grpc.CallOption) (*IncrRepertoryReply, error)
 	GetRepertory(ctx context.Context, in *GetRepertoryRequest, opts ...grpc.CallOption) (*GetRepertoryReply, error)
 }
 
@@ -53,7 +53,7 @@ func (c *repertoryServiceClient) DecrRepertory(ctx context.Context, in *DecrRepe
 	return out, nil
 }
 
-func (c *repertoryServiceClient) IncrRepertory(ctx context.Context, in *IncrRepertoryRequest, opts ...grpc.CallOption) (*IncrRepertoryReply, error) {
+func (c *repertoryServiceClient) IncrRepertory(ctx context.Context, in *DecrRepertoryRequest, opts ...grpc.CallOption) (*IncrRepertoryReply, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(IncrRepertoryReply)
 	err := c.cc.Invoke(ctx, RepertoryService_IncrRepertory_FullMethodName, in, out, cOpts...)
@@ -80,7 +80,7 @@ type RepertoryServiceServer interface {
 	// 减库存
 	DecrRepertory(context.Context, *DecrRepertoryRequest) (*DecrRepertoryReply, error)
 	// 加库存
-	IncrRepertory(context.Context, *IncrRepertoryRequest) (*IncrRepertoryReply, error)
+	IncrRepertory(context.Context, *DecrRepertoryRequest) (*IncrRepertoryReply, error)
 	GetRepertory(context.Context, *GetRepertoryRequest) (*GetRepertoryReply, error)
 	mustEmbedUnimplementedRepertoryServiceServer()
 }
@@ -95,7 +95,7 @@ type UnimplementedRepertoryServiceServer struct{}
 func (UnimplementedRepertoryServiceServer) DecrRepertory(context.Context, *DecrRepertoryRequest) (*DecrRepertoryReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DecrRepertory not implemented")
 }
-func (UnimplementedRepertoryServiceServer) IncrRepertory(context.Context, *IncrRepertoryRequest) (*IncrRepertoryReply, error) {
+func (UnimplementedRepertoryServiceServer) IncrRepertory(context.Context, *DecrRepertoryRequest) (*IncrRepertoryReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method IncrRepertory not implemented")
 }
 func (UnimplementedRepertoryServiceServer) GetRepertory(context.Context, *GetRepertoryRequest) (*GetRepertoryReply, error) {
@@ -141,7 +141,7 @@ func _RepertoryService_DecrRepertory_Handler(srv interface{}, ctx context.Contex
 }
 
 func _RepertoryService_IncrRepertory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(IncrRepertoryRequest)
+	in := new(DecrRepertoryRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -153,7 +153,7 @@ func _RepertoryService_IncrRepertory_Handler(srv interface{}, ctx context.Contex
 		FullMethod: RepertoryService_IncrRepertory_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RepertoryServiceServer).IncrRepertory(ctx, req.(*IncrRepertoryRequest))
+		return srv.(RepertoryServiceServer).IncrRepertory(ctx, req.(*DecrRepertoryRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }

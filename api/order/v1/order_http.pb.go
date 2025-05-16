@@ -24,7 +24,7 @@ const OperationOrderServiceCreateOrder = "/order.v1.OrderService/CreateOrder"
 const OperationOrderServiceGetOrder = "/order.v1.OrderService/GetOrder"
 
 type OrderServiceHTTPServer interface {
-	CancelOrder(context.Context, *CancelOrderRequest) (*CancelOrderReply, error)
+	CancelOrder(context.Context, *CreateOrderRequest) (*CancelOrderReply, error)
 	CreateOrder(context.Context, *CreateOrderRequest) (*CreateOrderReply, error)
 	GetOrder(context.Context, *GetOrderRequest) (*GetOrderReply, error)
 }
@@ -60,7 +60,7 @@ func _OrderService_CreateOrder0_HTTP_Handler(srv OrderServiceHTTPServer) func(ct
 
 func _OrderService_CancelOrder0_HTTP_Handler(srv OrderServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
-		var in CancelOrderRequest
+		var in CreateOrderRequest
 		if err := ctx.Bind(&in); err != nil {
 			return err
 		}
@@ -69,7 +69,7 @@ func _OrderService_CancelOrder0_HTTP_Handler(srv OrderServiceHTTPServer) func(ct
 		}
 		http.SetOperation(ctx, OperationOrderServiceCancelOrder)
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.CancelOrder(ctx, req.(*CancelOrderRequest))
+			return srv.CancelOrder(ctx, req.(*CreateOrderRequest))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
@@ -103,7 +103,7 @@ func _OrderService_GetOrder0_HTTP_Handler(srv OrderServiceHTTPServer) func(ctx h
 }
 
 type OrderServiceHTTPClient interface {
-	CancelOrder(ctx context.Context, req *CancelOrderRequest, opts ...http.CallOption) (rsp *CancelOrderReply, err error)
+	CancelOrder(ctx context.Context, req *CreateOrderRequest, opts ...http.CallOption) (rsp *CancelOrderReply, err error)
 	CreateOrder(ctx context.Context, req *CreateOrderRequest, opts ...http.CallOption) (rsp *CreateOrderReply, err error)
 	GetOrder(ctx context.Context, req *GetOrderRequest, opts ...http.CallOption) (rsp *GetOrderReply, err error)
 }
@@ -116,7 +116,7 @@ func NewOrderServiceHTTPClient(client *http.Client) OrderServiceHTTPClient {
 	return &OrderServiceHTTPClientImpl{client}
 }
 
-func (c *OrderServiceHTTPClientImpl) CancelOrder(ctx context.Context, in *CancelOrderRequest, opts ...http.CallOption) (*CancelOrderReply, error) {
+func (c *OrderServiceHTTPClientImpl) CancelOrder(ctx context.Context, in *CreateOrderRequest, opts ...http.CallOption) (*CancelOrderReply, error) {
 	var out CancelOrderReply
 	pattern := "/order/cancel"
 	path := binding.EncodeURL(pattern, in, false)

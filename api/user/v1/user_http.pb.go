@@ -29,7 +29,7 @@ type UsersHTTPServer interface {
 	BuyGoods(context.Context, *BuGoosRequest) (*BuGoosReply, error)
 	DecrMoney(context.Context, *DecrMoneyRequest) (*DecrMoneyReply, error)
 	GetUser(context.Context, *GetUserRequest) (*GetUserReply, error)
-	IncrMoney(context.Context, *IncrMoneyRequest) (*IncrMoneyReply, error)
+	IncrMoney(context.Context, *DecrMoneyRequest) (*IncrMoneyReply, error)
 	Register(context.Context, *RegisterRequest) (*RegisterReply, error)
 }
 
@@ -88,7 +88,7 @@ func _Users_DecrMoney0_HTTP_Handler(srv UsersHTTPServer) func(ctx http.Context) 
 
 func _Users_IncrMoney0_HTTP_Handler(srv UsersHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
-		var in IncrMoneyRequest
+		var in DecrMoneyRequest
 		if err := ctx.Bind(&in); err != nil {
 			return err
 		}
@@ -97,7 +97,7 @@ func _Users_IncrMoney0_HTTP_Handler(srv UsersHTTPServer) func(ctx http.Context) 
 		}
 		http.SetOperation(ctx, OperationUsersIncrMoney)
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.IncrMoney(ctx, req.(*IncrMoneyRequest))
+			return srv.IncrMoney(ctx, req.(*DecrMoneyRequest))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
@@ -156,7 +156,7 @@ type UsersHTTPClient interface {
 	BuyGoods(ctx context.Context, req *BuGoosRequest, opts ...http.CallOption) (rsp *BuGoosReply, err error)
 	DecrMoney(ctx context.Context, req *DecrMoneyRequest, opts ...http.CallOption) (rsp *DecrMoneyReply, err error)
 	GetUser(ctx context.Context, req *GetUserRequest, opts ...http.CallOption) (rsp *GetUserReply, err error)
-	IncrMoney(ctx context.Context, req *IncrMoneyRequest, opts ...http.CallOption) (rsp *IncrMoneyReply, err error)
+	IncrMoney(ctx context.Context, req *DecrMoneyRequest, opts ...http.CallOption) (rsp *IncrMoneyReply, err error)
 	Register(ctx context.Context, req *RegisterRequest, opts ...http.CallOption) (rsp *RegisterReply, err error)
 }
 
@@ -207,7 +207,7 @@ func (c *UsersHTTPClientImpl) GetUser(ctx context.Context, in *GetUserRequest, o
 	return &out, nil
 }
 
-func (c *UsersHTTPClientImpl) IncrMoney(ctx context.Context, in *IncrMoneyRequest, opts ...http.CallOption) (*IncrMoneyReply, error) {
+func (c *UsersHTTPClientImpl) IncrMoney(ctx context.Context, in *DecrMoneyRequest, opts ...http.CallOption) (*IncrMoneyReply, error) {
 	var out IncrMoneyReply
 	pattern := "/incr"
 	path := binding.EncodeURL(pattern, in, false)

@@ -13,19 +13,13 @@ message Repertory {
 
 
 message DecrRepertoryRequest {
-    int64 good_id = 1;
+    uint32 good_id = 1;
     uint32 good_quantity = 2;
     string gid = 3;
 }
 
 message DecrRepertoryReply {
   bool success = 1;
-}
-
-message IncrRepertoryRequest {
-  uint32 good_id = 1;
-  int32 good_quantity = 2;
-  string gid = 3;
 }
 
 message IncrRepertoryReply {
@@ -51,7 +45,7 @@ service RepertoryService {
     };
   }
   // 加库存
-  rpc IncrRepertory(IncrRepertoryRequest) returns (IncrRepertoryReply){
+  rpc IncrRepertory(DecrRepertoryRequest) returns (IncrRepertoryReply){
     option (google.api.http) = {
       post: "/repertory/incr"
       body: "*"

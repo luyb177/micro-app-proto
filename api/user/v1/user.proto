@@ -29,12 +29,6 @@ message DecrMoneyReply{
   bool success = 1;
 }
 
-message IncrMoneyRequest{
-  uint32 user_id = 1;
-  uint32 money = 2;
-  string gid = 3;
-}
-
 message IncrMoneyReply{
   bool success = 1;
 }
@@ -71,7 +65,7 @@ service Users {
       body: "*"
     };
   }
-  rpc IncrMoney(IncrMoneyRequest) returns (IncrMoneyReply){
+  rpc IncrMoney(DecrMoneyRequest) returns (IncrMoneyReply){
     option (google.api.http) = {
       post: "/incr"
       body: "*"

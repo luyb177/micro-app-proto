@@ -29,7 +29,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type OrderServiceClient interface {
 	CreateOrder(ctx context.Context, in *CreateOrderRequest, opts ...grpc.CallOption) (*CreateOrderReply, error)
-	CancelOrder(ctx context.Context, in *CancelOrderRequest, opts ...grpc.CallOption) (*CancelOrderReply, error)
+	CancelOrder(ctx context.Context, in *CreateOrderRequest, opts ...grpc.CallOption) (*CancelOrderReply, error)
 	GetOrder(ctx context.Context, in *GetOrderRequest, opts ...grpc.CallOption) (*GetOrderReply, error)
 }
 
@@ -51,7 +51,7 @@ func (c *orderServiceClient) CreateOrder(ctx context.Context, in *CreateOrderReq
 	return out, nil
 }
 
-func (c *orderServiceClient) CancelOrder(ctx context.Context, in *CancelOrderRequest, opts ...grpc.CallOption) (*CancelOrderReply, error) {
+func (c *orderServiceClient) CancelOrder(ctx context.Context, in *CreateOrderRequest, opts ...grpc.CallOption) (*CancelOrderReply, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(CancelOrderReply)
 	err := c.cc.Invoke(ctx, OrderService_CancelOrder_FullMethodName, in, out, cOpts...)
@@ -76,7 +76,7 @@ func (c *orderServiceClient) GetOrder(ctx context.Context, in *GetOrderRequest, 
 // for forward compatibility.
 type OrderServiceServer interface {
 	CreateOrder(context.Context, *CreateOrderRequest) (*CreateOrderReply, error)
-	CancelOrder(context.Context, *CancelOrderRequest) (*CancelOrderReply, error)
+	CancelOrder(context.Context, *CreateOrderRequest) (*CancelOrderReply, error)
 	GetOrder(context.Context, *GetOrderRequest) (*GetOrderReply, error)
 	mustEmbedUnimplementedOrderServiceServer()
 }
@@ -91,7 +91,7 @@ type UnimplementedOrderServiceServer struct{}
 func (UnimplementedOrderServiceServer) CreateOrder(context.Context, *CreateOrderRequest) (*CreateOrderReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateOrder not implemented")
 }
-func (UnimplementedOrderServiceServer) CancelOrder(context.Context, *CancelOrderRequest) (*CancelOrderReply, error) {
+func (UnimplementedOrderServiceServer) CancelOrder(context.Context, *CreateOrderRequest) (*CancelOrderReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CancelOrder not implemented")
 }
 func (UnimplementedOrderServiceServer) GetOrder(context.Context, *GetOrderRequest) (*GetOrderReply, error) {
@@ -137,7 +137,7 @@ func _OrderService_CreateOrder_Handler(srv interface{}, ctx context.Context, dec
 }
 
 func _OrderService_CancelOrder_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CancelOrderRequest)
+	in := new(CreateOrderRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -149,7 +149,7 @@ func _OrderService_CancelOrder_Handler(srv interface{}, ctx context.Context, dec
 		FullMethod: OrderService_CancelOrder_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(OrderServiceServer).CancelOrder(ctx, req.(*CancelOrderRequest))
+		return srv.(OrderServiceServer).CancelOrder(ctx, req.(*CreateOrderRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }

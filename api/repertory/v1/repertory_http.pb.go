@@ -28,7 +28,7 @@ type RepertoryServiceHTTPServer interface {
 	DecrRepertory(context.Context, *DecrRepertoryRequest) (*DecrRepertoryReply, error)
 	GetRepertory(context.Context, *GetRepertoryRequest) (*GetRepertoryReply, error)
 	// IncrRepertory 加库存
-	IncrRepertory(context.Context, *IncrRepertoryRequest) (*IncrRepertoryReply, error)
+	IncrRepertory(context.Context, *DecrRepertoryRequest) (*IncrRepertoryReply, error)
 }
 
 func RegisterRepertoryServiceHTTPServer(s *http.Server, srv RepertoryServiceHTTPServer) {
@@ -62,7 +62,7 @@ func _RepertoryService_DecrRepertory0_HTTP_Handler(srv RepertoryServiceHTTPServe
 
 func _RepertoryService_IncrRepertory0_HTTP_Handler(srv RepertoryServiceHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
-		var in IncrRepertoryRequest
+		var in DecrRepertoryRequest
 		if err := ctx.Bind(&in); err != nil {
 			return err
 		}
@@ -71,7 +71,7 @@ func _RepertoryService_IncrRepertory0_HTTP_Handler(srv RepertoryServiceHTTPServe
 		}
 		http.SetOperation(ctx, OperationRepertoryServiceIncrRepertory)
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.IncrRepertory(ctx, req.(*IncrRepertoryRequest))
+			return srv.IncrRepertory(ctx, req.(*DecrRepertoryRequest))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
@@ -107,7 +107,7 @@ func _RepertoryService_GetRepertory0_HTTP_Handler(srv RepertoryServiceHTTPServer
 type RepertoryServiceHTTPClient interface {
 	DecrRepertory(ctx context.Context, req *DecrRepertoryRequest, opts ...http.CallOption) (rsp *DecrRepertoryReply, err error)
 	GetRepertory(ctx context.Context, req *GetRepertoryRequest, opts ...http.CallOption) (rsp *GetRepertoryReply, err error)
-	IncrRepertory(ctx context.Context, req *IncrRepertoryRequest, opts ...http.CallOption) (rsp *IncrRepertoryReply, err error)
+	IncrRepertory(ctx context.Context, req *DecrRepertoryRequest, opts ...http.CallOption) (rsp *IncrRepertoryReply, err error)
 }
 
 type RepertoryServiceHTTPClientImpl struct {
@@ -144,7 +144,7 @@ func (c *RepertoryServiceHTTPClientImpl) GetRepertory(ctx context.Context, in *G
 	return &out, nil
 }
 
-func (c *RepertoryServiceHTTPClientImpl) IncrRepertory(ctx context.Context, in *IncrRepertoryRequest, opts ...http.CallOption) (*IncrRepertoryReply, error) {
+func (c *RepertoryServiceHTTPClientImpl) IncrRepertory(ctx context.Context, in *DecrRepertoryRequest, opts ...http.CallOption) (*IncrRepertoryReply, error) {
 	var out IncrRepertoryReply
 	pattern := "/repertory/incr"
 	path := binding.EncodeURL(pattern, in, false)

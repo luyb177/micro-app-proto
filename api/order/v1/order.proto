@@ -17,16 +17,12 @@ message CreateOrderRequest {
   uint32 good_id = 2;
   uint32 good_quantity = 3;
   string gid = 4;
+  optional string order_id = 5; // 补偿操作用到
 }
 
 message CreateOrderReply {
   bool success = 1;
   string order_id = 2;
-}
-
-message CancelOrderRequest {
-  string order_id = 1;
-  string gid = 2;
 }
 
 message CancelOrderReply {
@@ -36,6 +32,7 @@ message CancelOrderReply {
 message GetOrderRequest {
   string order_id = 1;
 }
+
 message GetOrderReply {
   bool success = 1;
   Order order = 2;
@@ -48,7 +45,7 @@ service OrderService {
       body: "*"
     };
   }
-  rpc CancelOrder(CancelOrderRequest) returns (CancelOrderReply){
+  rpc CancelOrder(CreateOrderRequest) returns (CancelOrderReply){
     option (google.api.http) = {
       post: "/order/cancel"
       body: "*"

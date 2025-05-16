@@ -32,7 +32,7 @@ const (
 type UsersClient interface {
 	Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*RegisterReply, error)
 	DecrMoney(ctx context.Context, in *DecrMoneyRequest, opts ...grpc.CallOption) (*DecrMoneyReply, error)
-	IncrMoney(ctx context.Context, in *IncrMoneyRequest, opts ...grpc.CallOption) (*IncrMoneyReply, error)
+	IncrMoney(ctx context.Context, in *DecrMoneyRequest, opts ...grpc.CallOption) (*IncrMoneyReply, error)
 	GetUser(ctx context.Context, in *GetUserRequest, opts ...grpc.CallOption) (*GetUserReply, error)
 	BuyGoods(ctx context.Context, in *BuGoosRequest, opts ...grpc.CallOption) (*BuGoosReply, error)
 }
@@ -65,7 +65,7 @@ func (c *usersClient) DecrMoney(ctx context.Context, in *DecrMoneyRequest, opts 
 	return out, nil
 }
 
-func (c *usersClient) IncrMoney(ctx context.Context, in *IncrMoneyRequest, opts ...grpc.CallOption) (*IncrMoneyReply, error) {
+func (c *usersClient) IncrMoney(ctx context.Context, in *DecrMoneyRequest, opts ...grpc.CallOption) (*IncrMoneyReply, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(IncrMoneyReply)
 	err := c.cc.Invoke(ctx, Users_IncrMoney_FullMethodName, in, out, cOpts...)
@@ -101,7 +101,7 @@ func (c *usersClient) BuyGoods(ctx context.Context, in *BuGoosRequest, opts ...g
 type UsersServer interface {
 	Register(context.Context, *RegisterRequest) (*RegisterReply, error)
 	DecrMoney(context.Context, *DecrMoneyRequest) (*DecrMoneyReply, error)
-	IncrMoney(context.Context, *IncrMoneyRequest) (*IncrMoneyReply, error)
+	IncrMoney(context.Context, *DecrMoneyRequest) (*IncrMoneyReply, error)
 	GetUser(context.Context, *GetUserRequest) (*GetUserReply, error)
 	BuyGoods(context.Context, *BuGoosRequest) (*BuGoosReply, error)
 	mustEmbedUnimplementedUsersServer()
@@ -120,7 +120,7 @@ func (UnimplementedUsersServer) Register(context.Context, *RegisterRequest) (*Re
 func (UnimplementedUsersServer) DecrMoney(context.Context, *DecrMoneyRequest) (*DecrMoneyReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DecrMoney not implemented")
 }
-func (UnimplementedUsersServer) IncrMoney(context.Context, *IncrMoneyRequest) (*IncrMoneyReply, error) {
+func (UnimplementedUsersServer) IncrMoney(context.Context, *DecrMoneyRequest) (*IncrMoneyReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method IncrMoney not implemented")
 }
 func (UnimplementedUsersServer) GetUser(context.Context, *GetUserRequest) (*GetUserReply, error) {
@@ -187,7 +187,7 @@ func _Users_DecrMoney_Handler(srv interface{}, ctx context.Context, dec func(int
 }
 
 func _Users_IncrMoney_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(IncrMoneyRequest)
+	in := new(DecrMoneyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -199,7 +199,7 @@ func _Users_IncrMoney_Handler(srv interface{}, ctx context.Context, dec func(int
 		FullMethod: Users_IncrMoney_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UsersServer).IncrMoney(ctx, req.(*IncrMoneyRequest))
+		return srv.(UsersServer).IncrMoney(ctx, req.(*DecrMoneyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }

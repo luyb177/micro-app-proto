@@ -84,7 +84,7 @@ func (x *Repertory) GetGoodQuantity() uint32 {
 
 type DecrRepertoryRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	GoodId        int64                  `protobuf:"varint,1,opt,name=good_id,json=goodId,proto3" json:"good_id,omitempty"`
+	GoodId        uint32                 `protobuf:"varint,1,opt,name=good_id,json=goodId,proto3" json:"good_id,omitempty"`
 	GoodQuantity  uint32                 `protobuf:"varint,2,opt,name=good_quantity,json=goodQuantity,proto3" json:"good_quantity,omitempty"`
 	Gid           string                 `protobuf:"bytes,3,opt,name=gid,proto3" json:"gid,omitempty"`
 	unknownFields protoimpl.UnknownFields
@@ -121,7 +121,7 @@ func (*DecrRepertoryRequest) Descriptor() ([]byte, []int) {
 	return file_api_repertory_v1_repertory_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *DecrRepertoryRequest) GetGoodId() int64 {
+func (x *DecrRepertoryRequest) GetGoodId() uint32 {
 	if x != nil {
 		return x.GoodId
 	}
@@ -186,66 +186,6 @@ func (x *DecrRepertoryReply) GetSuccess() bool {
 	return false
 }
 
-type IncrRepertoryRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	GoodId        uint32                 `protobuf:"varint,1,opt,name=good_id,json=goodId,proto3" json:"good_id,omitempty"`
-	GoodQuantity  int32                  `protobuf:"varint,2,opt,name=good_quantity,json=goodQuantity,proto3" json:"good_quantity,omitempty"`
-	Gid           string                 `protobuf:"bytes,3,opt,name=gid,proto3" json:"gid,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *IncrRepertoryRequest) Reset() {
-	*x = IncrRepertoryRequest{}
-	mi := &file_api_repertory_v1_repertory_proto_msgTypes[3]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *IncrRepertoryRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*IncrRepertoryRequest) ProtoMessage() {}
-
-func (x *IncrRepertoryRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_repertory_v1_repertory_proto_msgTypes[3]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use IncrRepertoryRequest.ProtoReflect.Descriptor instead.
-func (*IncrRepertoryRequest) Descriptor() ([]byte, []int) {
-	return file_api_repertory_v1_repertory_proto_rawDescGZIP(), []int{3}
-}
-
-func (x *IncrRepertoryRequest) GetGoodId() uint32 {
-	if x != nil {
-		return x.GoodId
-	}
-	return 0
-}
-
-func (x *IncrRepertoryRequest) GetGoodQuantity() int32 {
-	if x != nil {
-		return x.GoodQuantity
-	}
-	return 0
-}
-
-func (x *IncrRepertoryRequest) GetGid() string {
-	if x != nil {
-		return x.Gid
-	}
-	return ""
-}
-
 type IncrRepertoryReply struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
@@ -255,7 +195,7 @@ type IncrRepertoryReply struct {
 
 func (x *IncrRepertoryReply) Reset() {
 	*x = IncrRepertoryReply{}
-	mi := &file_api_repertory_v1_repertory_proto_msgTypes[4]
+	mi := &file_api_repertory_v1_repertory_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -267,7 +207,7 @@ func (x *IncrRepertoryReply) String() string {
 func (*IncrRepertoryReply) ProtoMessage() {}
 
 func (x *IncrRepertoryReply) ProtoReflect() protoreflect.Message {
-	mi := &file_api_repertory_v1_repertory_proto_msgTypes[4]
+	mi := &file_api_repertory_v1_repertory_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -280,7 +220,7 @@ func (x *IncrRepertoryReply) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use IncrRepertoryReply.ProtoReflect.Descriptor instead.
 func (*IncrRepertoryReply) Descriptor() ([]byte, []int) {
-	return file_api_repertory_v1_repertory_proto_rawDescGZIP(), []int{4}
+	return file_api_repertory_v1_repertory_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *IncrRepertoryReply) GetSuccess() bool {
@@ -299,7 +239,7 @@ type GetRepertoryRequest struct {
 
 func (x *GetRepertoryRequest) Reset() {
 	*x = GetRepertoryRequest{}
-	mi := &file_api_repertory_v1_repertory_proto_msgTypes[5]
+	mi := &file_api_repertory_v1_repertory_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -311,7 +251,7 @@ func (x *GetRepertoryRequest) String() string {
 func (*GetRepertoryRequest) ProtoMessage() {}
 
 func (x *GetRepertoryRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_repertory_v1_repertory_proto_msgTypes[5]
+	mi := &file_api_repertory_v1_repertory_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -324,7 +264,7 @@ func (x *GetRepertoryRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetRepertoryRequest.ProtoReflect.Descriptor instead.
 func (*GetRepertoryRequest) Descriptor() ([]byte, []int) {
-	return file_api_repertory_v1_repertory_proto_rawDescGZIP(), []int{5}
+	return file_api_repertory_v1_repertory_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *GetRepertoryRequest) GetGoodId() uint32 {
@@ -344,7 +284,7 @@ type GetRepertoryReply struct {
 
 func (x *GetRepertoryReply) Reset() {
 	*x = GetRepertoryReply{}
-	mi := &file_api_repertory_v1_repertory_proto_msgTypes[6]
+	mi := &file_api_repertory_v1_repertory_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -356,7 +296,7 @@ func (x *GetRepertoryReply) String() string {
 func (*GetRepertoryReply) ProtoMessage() {}
 
 func (x *GetRepertoryReply) ProtoReflect() protoreflect.Message {
-	mi := &file_api_repertory_v1_repertory_proto_msgTypes[6]
+	mi := &file_api_repertory_v1_repertory_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -369,7 +309,7 @@ func (x *GetRepertoryReply) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetRepertoryReply.ProtoReflect.Descriptor instead.
 func (*GetRepertoryReply) Descriptor() ([]byte, []int) {
-	return file_api_repertory_v1_repertory_proto_rawDescGZIP(), []int{6}
+	return file_api_repertory_v1_repertory_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *GetRepertoryReply) GetSuccess() bool {
@@ -396,15 +336,11 @@ const file_api_repertory_v1_repertory_proto_rawDesc = "" +
 	"\tgood_name\x18\x02 \x01(\tR\bgoodName\x12#\n" +
 	"\rgood_quantity\x18\x03 \x01(\rR\fgoodQuantity\"f\n" +
 	"\x14DecrRepertoryRequest\x12\x17\n" +
-	"\agood_id\x18\x01 \x01(\x03R\x06goodId\x12#\n" +
+	"\agood_id\x18\x01 \x01(\rR\x06goodId\x12#\n" +
 	"\rgood_quantity\x18\x02 \x01(\rR\fgoodQuantity\x12\x10\n" +
 	"\x03gid\x18\x03 \x01(\tR\x03gid\".\n" +
 	"\x12DecrRepertoryReply\x12\x18\n" +
-	"\asuccess\x18\x01 \x01(\bR\asuccess\"f\n" +
-	"\x14IncrRepertoryRequest\x12\x17\n" +
-	"\agood_id\x18\x01 \x01(\rR\x06goodId\x12#\n" +
-	"\rgood_quantity\x18\x02 \x01(\x05R\fgoodQuantity\x12\x10\n" +
-	"\x03gid\x18\x03 \x01(\tR\x03gid\".\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\".\n" +
 	"\x12IncrRepertoryReply\x12\x18\n" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\".\n" +
 	"\x13GetRepertoryRequest\x12\x17\n" +
@@ -414,7 +350,7 @@ const file_api_repertory_v1_repertory_proto_rawDesc = "" +
 	"\trepertory\x18\x02 \x01(\v2\x17.repertory.v1.RepertoryR\trepertory2\xea\x02\n" +
 	"\x10RepertoryService\x12q\n" +
 	"\rDecrRepertory\x12\".repertory.v1.DecrRepertoryRequest\x1a .repertory.v1.DecrRepertoryReply\"\x1a\x82\xd3\xe4\x93\x02\x14:\x01*\"\x0f/repertory/decr\x12q\n" +
-	"\rIncrRepertory\x12\".repertory.v1.IncrRepertoryRequest\x1a .repertory.v1.IncrRepertoryReply\"\x1a\x82\xd3\xe4\x93\x02\x14:\x01*\"\x0f/repertory/incr\x12p\n" +
+	"\rIncrRepertory\x12\".repertory.v1.DecrRepertoryRequest\x1a .repertory.v1.IncrRepertoryReply\"\x1a\x82\xd3\xe4\x93\x02\x14:\x01*\"\x0f/repertory/incr\x12p\n" +
 	"\fGetRepertory\x12!.repertory.v1.GetRepertoryRequest\x1a\x1f.repertory.v1.GetRepertoryReply\"\x1c\x82\xd3\xe4\x93\x02\x16\x12\x14/repertory/{good_id}B\x15Z\x13api/repertory/v1;v1b\x06proto3"
 
 var (
@@ -429,24 +365,23 @@ func file_api_repertory_v1_repertory_proto_rawDescGZIP() []byte {
 	return file_api_repertory_v1_repertory_proto_rawDescData
 }
 
-var file_api_repertory_v1_repertory_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
+var file_api_repertory_v1_repertory_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
 var file_api_repertory_v1_repertory_proto_goTypes = []any{
 	(*Repertory)(nil),            // 0: repertory.v1.Repertory
 	(*DecrRepertoryRequest)(nil), // 1: repertory.v1.DecrRepertoryRequest
 	(*DecrRepertoryReply)(nil),   // 2: repertory.v1.DecrRepertoryReply
-	(*IncrRepertoryRequest)(nil), // 3: repertory.v1.IncrRepertoryRequest
-	(*IncrRepertoryReply)(nil),   // 4: repertory.v1.IncrRepertoryReply
-	(*GetRepertoryRequest)(nil),  // 5: repertory.v1.GetRepertoryRequest
-	(*GetRepertoryReply)(nil),    // 6: repertory.v1.GetRepertoryReply
+	(*IncrRepertoryReply)(nil),   // 3: repertory.v1.IncrRepertoryReply
+	(*GetRepertoryRequest)(nil),  // 4: repertory.v1.GetRepertoryRequest
+	(*GetRepertoryReply)(nil),    // 5: repertory.v1.GetRepertoryReply
 }
 var file_api_repertory_v1_repertory_proto_depIdxs = []int32{
 	0, // 0: repertory.v1.GetRepertoryReply.repertory:type_name -> repertory.v1.Repertory
 	1, // 1: repertory.v1.RepertoryService.DecrRepertory:input_type -> repertory.v1.DecrRepertoryRequest
-	3, // 2: repertory.v1.RepertoryService.IncrRepertory:input_type -> repertory.v1.IncrRepertoryRequest
-	5, // 3: repertory.v1.RepertoryService.GetRepertory:input_type -> repertory.v1.GetRepertoryRequest
+	1, // 2: repertory.v1.RepertoryService.IncrRepertory:input_type -> repertory.v1.DecrRepertoryRequest
+	4, // 3: repertory.v1.RepertoryService.GetRepertory:input_type -> repertory.v1.GetRepertoryRequest
 	2, // 4: repertory.v1.RepertoryService.DecrRepertory:output_type -> repertory.v1.DecrRepertoryReply
-	4, // 5: repertory.v1.RepertoryService.IncrRepertory:output_type -> repertory.v1.IncrRepertoryReply
-	6, // 6: repertory.v1.RepertoryService.GetRepertory:output_type -> repertory.v1.GetRepertoryReply
+	3, // 5: repertory.v1.RepertoryService.IncrRepertory:output_type -> repertory.v1.IncrRepertoryReply
+	5, // 6: repertory.v1.RepertoryService.GetRepertory:output_type -> repertory.v1.GetRepertoryReply
 	4, // [4:7] is the sub-list for method output_type
 	1, // [1:4] is the sub-list for method input_type
 	1, // [1:1] is the sub-list for extension type_name
@@ -465,7 +400,7 @@ func file_api_repertory_v1_repertory_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_api_repertory_v1_repertory_proto_rawDesc), len(file_api_repertory_v1_repertory_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   7,
+			NumMessages:   6,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

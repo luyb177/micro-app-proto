@@ -63,7 +63,7 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: '#/components/schemas/IncrMoneyRequest'
+                            $ref: '#/components/schemas/DecrMoneyRequest'
                 required: true
             responses:
                 "200":
@@ -182,17 +182,6 @@ components:
             properties:
                 success:
                     type: boolean
-        IncrMoneyRequest:
-            type: object
-            properties:
-                userId:
-                    type: integer
-                    format: uint32
-                money:
-                    type: integer
-                    format: uint32
-                gid:
-                    type: string
         RegisterReply:
             type: object
             properties:
