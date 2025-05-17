@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package gateway.v1;
+import "google/api/annotations.proto";  // 为了支持http
+option go_package = "api/gateway/v1;v1";
+
+message BuGoosRequest{
+  uint32 user_id = 1;
+  uint32 goods_id = 2;
+  uint32 quantity = 3;
+}
+
+message BuGoosReply{
+  bool success = 1;
+}
+
+service Gateway {
+  rpc BuyGoods(BuGoosRequest) returns (BuGoosReply){
+    option (google.api.http) = {
+      post: "/buy"
+      body: "*"
+    };
+  }
+}
